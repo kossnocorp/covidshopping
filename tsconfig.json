@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "#app/*": ["app/*"]
+    },
+    "jsx": "react",
+    "jsxFactory": "h",
+    "target": "es6",
+    "module": "commonjs",
+    "lib": ["dom", "es2017"],
+    "allowJs": true,
+    "checkJs": false,
+    "sourceMap": true,
+    "outDir": "build",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": ["./node_modules/@types", "./app/types"]
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

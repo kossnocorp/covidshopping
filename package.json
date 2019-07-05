@@ -1,0 +1,17 @@
+{
+  "name": "firebun-app",
+  "version": "0.1.0",
+  "description": "Template for Firebun application",
+  "main": "server/index.js",
+  "engines": {
+    "node": "10"
+  },
+  "repository": "git@github.com:kossnocorp/firebun-app.git",
+  "author": "Sasha Koss <koss@nocorp.me>",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^8.2.0",
+    "firebase-functions": "^3.0.2",
+    "firebun": "../firebun/lib"
+  }
+}
