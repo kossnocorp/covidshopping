@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
+      // How to sync with bun.config.ts?
       "#app/*": ["app/*"]
     },
     "jsx": "react",

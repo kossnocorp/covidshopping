@@ -1,1 +1,1 @@
-module.exports = require('./node_modules/firebun/configs/postcss/config')
+module.exports = require('firebun/config/postcss')
