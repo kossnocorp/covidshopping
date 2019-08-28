@@ -32,7 +32,7 @@ const questions = [
 const rootPath = process.cwd()
 
 inquirer.prompt(questions).then(answers =>
-  replaceInFile(resolve(rootPath, 'bug.config.ts'), {
+  replaceInFile(resolve(rootPath, 'bun.config.ts'), {
     [config.projects.production]: answers.productionProjectId as string,
     [config.projects.staging]: answers.stagingProjectId as string,
     '4000': (answers.port as number).toString()
