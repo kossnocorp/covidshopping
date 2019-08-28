@@ -1,6 +1,5 @@
 import inquirer from 'inquirer'
 import { resolve } from 'path'
-import { execSync } from 'child_process'
 import config from '../../bun.config'
 import { readFile, writeFile } from 'mz/fs'
 
