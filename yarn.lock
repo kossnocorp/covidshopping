@@ -3886,8 +3886,10 @@ firebase@6.2.4:
     "@firebase/storage" "0.3.4"
     "@firebase/util" "0.2.20"
 
-firebun@../firebun/lib:
-  version "0.1.0"
+firebun@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/firebun/-/firebun-0.2.0.tgz#ee69d05464a7b7e1d2b7ad01eaffe45d5b9d006d"
+  integrity sha512-asY9u1RmcXkFCucPnPYE3rGbADgpYCBFOxnQwGTdi92sSQgTja/vSP47hfOT9yAPyZO9CQ8OiIkAZRUUOjcO7g==
   dependencies:
     "@babel/core" "^7.1.2"
     "@babel/preset-env" "^7.1.0"
