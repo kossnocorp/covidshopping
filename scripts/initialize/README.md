@@ -3,7 +3,7 @@
 To start a Firebun project, run this command in your terminal:
 
 ```bash
-bash <(curl -L git.io/fjxEB) -s project-name
+bash <(curl -L git.io/fjxEB) project-name
 ```
 
 _See [the source code of the script on GitHub](https://git.io/fjxMW)_
