@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 echo "(~‾▿‾)~ Initializing your application for the first time"
 
 echo "( ͡° ͜ʖ ͡°) It's settings time!"
