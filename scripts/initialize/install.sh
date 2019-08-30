@@ -16,4 +16,5 @@ echo "─=≡Σ((( つ◕ل͜◕)つ Creating Firebun project in ./$PROJECT_DIR"
 git clone --origin template https://github.com/kossnocorp/firebun-app.git $PROJECT_DIR
 cd $PROJECT_DIR
 ./scripts/install.sh
+exec < /dev/tty;
 make start
