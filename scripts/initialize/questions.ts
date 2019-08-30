@@ -8,6 +8,13 @@ const isPresent = (id: string) => id.trim() !== ''
 const questions = [
   {
     type: 'input',
+    name: 'projectName',
+    message: 'Enter the app name',
+    validate: isPresent
+  },
+
+  {
+    type: 'input',
     name: 'productionProjectId',
     message: 'Enter production project id',
     validate: isPresent
@@ -32,6 +39,7 @@ const rootPath = process.cwd()
 
 inquirer.prompt(questions).then(answers =>
   replaceInFile(resolve(rootPath, 'bun.config.ts'), {
+    [config.name]: answers.name as string,
     [config.projects.production]: answers.productionProjectId as string,
     [config.projects.staging]: answers.stagingProjectId as string,
     '4000': (answers.port as number).toString()

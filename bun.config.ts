@@ -1,6 +1,8 @@
 import { AppConfig } from 'firebun/config/types'
 
 const config: AppConfig = {
+  name: 'Firebun App',
+
   port: 4000,
 
   // Sync with tsconfig.json?
