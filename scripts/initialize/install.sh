@@ -7,7 +7,7 @@ PROJECT_DIR=$1
 if [ -z "$PROJECT_DIR" ]
 then
   echo "(•̀o•́)ง Project directory is missing! Please pass directory name as the first argument, e.g.: "
-  echo "  curl -L git.io/fjxEB | sh -s project-name"
+  echo "  curl -L git.io/fjxEB | sh -i -s project-name"
   exit 1
 fi
 
