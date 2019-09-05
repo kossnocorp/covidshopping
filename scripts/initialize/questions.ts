@@ -68,11 +68,10 @@ function firebaseQuestions(env: 'production' | 'staging') {
     },
 
     {
-      type: 'confirm',
+      type: 'input',
       name: `${env}KeyConfirm`,
       message: `Please download service account key as secrets/keys/${env}.json in the project directory and press enter.`,
-      validate: (confirm: boolean, answers: Answers) => {
-        if (!confirm) return false
+      validate: (_value: string, answers: Answers) => {
         try {
           const content = JSON.parse(
             readFileSync(resolve(rootPath, `secrets/keys/${env}.json`), 'utf8')
