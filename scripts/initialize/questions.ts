@@ -1,4 +1,4 @@
-import enquirer from 'enquirer'
+import inquirer from 'inquirer'
 import { readFile, readFileSync, writeFile } from 'mz/fs'
 import { resolve } from 'path'
 import config from '../../bun.config'
@@ -27,7 +27,7 @@ const appNameQuestion = {
 }
 
 const portQuestion = {
-  type: 'numeral',
+  type: 'number',
   name: 'port',
   message: 'Enter development server port',
   initial: 4000
@@ -41,15 +41,14 @@ const productionQuestion = {
 }
 
 function firebaseQuestions(env: 'production' | 'staging') {
-  const skip =
-    env === 'staging' ? false : (answers: Answers) => !answers.production
+  const when = env === 'staging' || ((answers: Answers) => answers.production)
   return [
     {
       type: 'input',
       name: `${env}ProjectId`,
       message: `Enter ${env} Firebase project id`,
       validate: isPresent,
-      skip
+      when
     },
 
     {
@@ -57,7 +56,7 @@ function firebaseQuestions(env: 'production' | 'staging') {
       name: `${env}WebAPIKey`,
       message: `Enter ${env} Firebase web API key`,
       validate: isPresent,
-      skip
+      when
     },
 
     {
@@ -65,7 +64,7 @@ function firebaseQuestions(env: 'production' | 'staging') {
       name: `${env}AuthDomain`,
       message: `Enter ${env} Firebase auth domain`,
       validate: isPresent,
-      skip
+      when
     },
 
     {
@@ -88,13 +87,13 @@ function firebaseQuestions(env: 'production' | 'staging') {
           return false
         }
       },
-      skip
+      when
     }
   ]
 }
 
 async function main() {
-  const answers = await enquirer.prompt<Answers>(
+  const answers = await inquirer.prompt<Answers>(
     ([appNameQuestion, portQuestion] as any[]) // TODO: How to get rid of any[]?
       .concat(firebaseQuestions('staging'))
       .concat(productionQuestion)
