@@ -1,5 +1,5 @@
 import appConfig from '../../bun.config'
-import { AppEnv } from 'firebun/env'
+import { appEnv } from 'firebun/env'
 
 export interface FirebaseWebConfig {
   apiKey: string
@@ -14,37 +14,34 @@ const stagingFirebase: FirebaseWebConfig = {
 }
 
 export type RuntimeConfig = {
-  appName: string
   firebase: FirebaseWebConfig
 }
 
-const appName = appConfig.name
-
 const configs: {
-  [appEnv in AppEnv]: RuntimeConfig
+  development: RuntimeConfig
+  staging: RuntimeConfig
+  production: RuntimeConfig
+  test?: RuntimeConfig
 } = {
   development: {
-    appName,
+    firebase: stagingFirebase
+  },
+
+  staging: {
     firebase: stagingFirebase
   },
 
   production: {
-    appName,
     firebase: {
       apiKey: 'AIzaSyCcBRiwV8pCh7Cv5p4Z770GtpGF2sX7y4k',
       authDomain: 'diaryemail.com',
       projectId: appConfig.projects.production
     }
-  },
-
-  staging: {
-    appName,
-    firebase: stagingFirebase
   }
 }
-const config = configs[appEnv]
-
-// const globalConfig: GlobalConfig = {}
+if (!configs[appEnv])
+  throw new Error(`(•̀o•́)ง ${appEnv} is missing the runtime configs!`)
+const config = configs[appEnv] as RuntimeConfig
 
 export default config
-// export { AppEnv, appEnv, NodeEnv, nodeEnv, globalConfig }
+export { appConfig }

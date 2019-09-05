@@ -12,7 +12,7 @@
   "dependencies": {
     "firebase-admin": "^8.2.0",
     "firebase-functions": "^3.0.2",
-    "firebun": "^0.3.1"
+    "firebun": "^0.4.0"
   },
   "devDependencies": {
     "@types/inquirer": "^6.5.0",
