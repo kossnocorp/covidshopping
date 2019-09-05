@@ -30,14 +30,14 @@ const portQuestion = {
   type: 'number',
   name: 'port',
   message: 'Enter development server port',
-  initial: 4000
+  default: 4000
 }
 
 const productionQuestion = {
   type: 'confirm',
   name: 'production',
   message: 'Do you want to setup prodution environment now?',
-  initial: false
+  default: false
 }
 
 function firebaseQuestions(env: 'production' | 'staging') {
