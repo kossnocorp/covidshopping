@@ -3,6 +3,7 @@
 set -e
 
 echo "(~‾▿‾)~ Initializing your application for the first time"
+git stash
 
 echo "( ͡° ͜ʖ ͡°) It's settings time!"
 ts-node ./scripts/initialize/questions.ts
@@ -11,7 +12,6 @@ ts-node ./scripts/initialize/questions.ts
 rm -rf scripts/initialize
 
 echo "(｡◕‿‿◕｡) Creating git commit with the initial config"
-git stash
 git add scripts/initialize bun.config.ts
 git commit -c 'ᕕ( ᐛ )ᕗ Initialize the app'
 git stash pop

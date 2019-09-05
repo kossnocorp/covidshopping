@@ -3886,10 +3886,10 @@ firebase@6.2.4:
     "@firebase/storage" "0.3.4"
     "@firebase/util" "0.2.20"
 
-firebun@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/firebun/-/firebun-0.4.0.tgz#3a7acabffcdb5458f09a6a4103d966d9ba70ccee"
-  integrity sha512-5pnlM3K0eN7ywa+PCpK01xsLz9GCSLZ/Exv5AiJjZDzQHO5GkxWfjAaOlEZ82IkLb5vRIMi+fXS5BgUChSirLQ==
+firebun@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/firebun/-/firebun-0.5.0.tgz#fdfe158c32bff56d2c1116f414ce0d98c54a998e"
+  integrity sha512-IdGiyLBTIpt16Uvv63/lkR52VdRwZTTZ2caHv76bDnyLxUf8ab5VcBpxSzQBvIsIADISvFEKF1e4vB/OBFG+VQ==
   dependencies:
     "@babel/core" "^7.1.2"
     "@babel/preset-env" "^7.1.0"
@@ -3930,7 +3930,6 @@ firebun@^0.4.0:
     ts-node "8.1.0"
     tsconfig-paths "3.8.0"
     tsconfig-paths-webpack-plugin "^3.2.0"
-    typescript "^3.5.2"
     webpack "^4.20.2"
     webpack-bundle-analyzer "^3.0.2"
     webpack-cli "^3.1.2"
@@ -8649,11 +8648,6 @@ typescript@3.6:
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.6.2.tgz#105b0f1934119dde543ac8eb71af3a91009efe54"
   integrity sha512-lmQ4L+J6mnu3xweP8+rOrUwzmN+MRAj7TgtJtDaXE5PMyX2kCrklhg3rvOsOIfNeAWMQWO2F1GPc1kMD2vLAfw==
-
-typescript@^3.5.2:
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.2.tgz#a09e1dc69bc9551cadf17dba10ee42cf55e5d56c"
-  integrity sha512-7KxJovlYhTX5RaRbUdkAXN1KUZ8PwWlTzQdHV6xNqvuFOs7+WBo10TQUqT19Q/Jz2hk5v9TQDIhyLhhJY4p5AA==
 
 uglify-js@~1.3.4:
   version "1.3.5"
