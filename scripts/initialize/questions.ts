@@ -27,7 +27,7 @@ const appNameQuestion = {
 }
 
 const portQuestion = {
-  type: 'number',
+  type: 'numeral',
   name: 'port',
   message: 'Enter development server port',
   initial: 4000
