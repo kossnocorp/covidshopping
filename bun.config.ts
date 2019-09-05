@@ -16,7 +16,7 @@ const config: AppConfig = {
   },
 
   rewrites: [
-    { source: '/hello', function: 'helloWorld' },
+    { source: '/hello', function: 'hello' },
     { source: '/**', function: 'renderer' }
   ]
 }

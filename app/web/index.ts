@@ -6,4 +6,10 @@ import './style'
 
 firebase.initializeApp(config.firebase)
 
-alert('Hello, world!')
+const counterEl = document.getElementById('counter')
+let count = 0
+counterEl &&
+  setInterval(() => {
+    count++
+    counterEl.innerText = count.toString()
+  }, 1000)

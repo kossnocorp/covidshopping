@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [ -n "$SKIP_INIT" ]; then
+  exit 0
+fi
+
 set -e
 
 echo "(~‾▿‾)~ Initializing your application for the first time"
