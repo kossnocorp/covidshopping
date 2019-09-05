@@ -21,7 +21,7 @@ type Answers = {
 
 const appNameQuestion = {
   type: 'input',
-  name: 'appName',
+  name: 'name',
   message: 'Enter the app name (i.e. "Awesome List")',
   validate: isPresent
 }
