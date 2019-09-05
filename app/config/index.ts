@@ -8,8 +8,8 @@ export interface FirebaseWebConfig {
 }
 
 const stagingFirebase: FirebaseWebConfig = {
-  apiKey: 'AIzaSyBTJ1rdienjeuQXsr9hAN-xG86RI2THsrw',
-  authDomain: 'staging.diaryemail.com',
+  apiKey: 'AIzaSyAcNX2sCAlEbZ7sPWuYvt5I2NXjNP_4hMw',
+  authDomain: 'staging.firebun.dev',
   projectId: appConfig.projects.staging
 }
 
@@ -33,8 +33,8 @@ const configs: {
 
   production: {
     firebase: {
-      apiKey: 'AIzaSyCcBRiwV8pCh7Cv5p4Z770GtpGF2sX7y4k',
-      authDomain: 'diaryemail.com',
+      apiKey: 'AIzaSyA7kMGa_QFHrP7Cpt_KPtgKq97eyZ0wzcg',
+      authDomain: 'firebun.dev',
       projectId: appConfig.projects.production
     }
   }

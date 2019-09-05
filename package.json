@@ -15,9 +15,8 @@
     "firebun": "^0.4.0"
   },
   "devDependencies": {
-    "@types/inquirer": "^6.5.0",
     "@types/mz": "^0.0.32",
-    "inquirer": "^7.0.0",
+    "enquirer": "^2.3.1",
     "mz": "^2.7.0",
     "ts-node": "^8.3.0",
     "typescript": "3.6"

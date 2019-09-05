@@ -1,4 +1,4 @@
-import inquirer from 'inquirer'
+import enquirer from 'enquirer'
 import { readFile, readFileSync, writeFile } from 'mz/fs'
 import { resolve } from 'path'
 import config from '../../bun.config'
@@ -10,11 +10,13 @@ const isPresent = (id: string) => id.trim() !== ''
 type Answers = {
   name: string
   port: number
-  productionProjectId: string
-  productionWebAPIKey: string
-  staging: boolean
   stagingProjectId: string
   stagingWebAPIKey: string
+  stagingAuthDomain: string
+  production: boolean
+  productionProjectId?: string
+  productionWebAPIKey?: string
+  productionAuthDomain?: string
 }
 
 const appNameQuestion = {
@@ -28,26 +30,26 @@ const portQuestion = {
   type: 'number',
   name: 'port',
   message: 'Enter development server port',
-  default: 4000
+  initial: 4000
 }
 
-const stagingQuestion = {
+const productionQuestion = {
   type: 'confirm',
-  name: 'staging',
-  message:
-    'Do you want to setup staging now? If not, the production enviroment will be used in development (Firestore, Functions config, etc.).',
-  default: false
+  name: 'production',
+  message: 'Do you want to setup prodution environment now?',
+  initial: false
 }
 
 function firebaseQuestions(env: 'production' | 'staging') {
-  const when = env === 'production' || ((answers: Answers) => answers.staging)
+  const skip =
+    env === 'staging' ? false : (answers: Answers) => !answers.production
   return [
     {
       type: 'input',
       name: `${env}ProjectId`,
       message: `Enter ${env} Firebase project id`,
       validate: isPresent,
-      when
+      skip
     },
 
     {
@@ -55,7 +57,15 @@ function firebaseQuestions(env: 'production' | 'staging') {
       name: `${env}WebAPIKey`,
       message: `Enter ${env} Firebase web API key`,
       validate: isPresent,
-      when
+      skip
+    },
+
+    {
+      type: 'input',
+      name: `${env}AuthDomain`,
+      message: `Enter ${env} Firebase auth domain`,
+      validate: isPresent,
+      skip
     },
 
     {
@@ -78,20 +88,29 @@ function firebaseQuestions(env: 'production' | 'staging') {
           return false
         }
       },
-      when
+      skip
     }
   ]
 }
 
 async function main() {
-  const answers = await inquirer.prompt<Answers>(
+  const answers = await enquirer.prompt<Answers>(
     ([appNameQuestion, portQuestion] as any[]) // TODO: How to get rid of any[]?
-      .concat(firebaseQuestions('production'))
-      .concat(stagingQuestion)
       .concat(firebaseQuestions('staging'))
+      .concat(productionQuestion)
+      .concat(firebaseQuestions('production'))
   )
 
   await replaceInFiles({
+    [resolve(rootPath, 'app/config/index.ts')]: {
+      AIzaSyAcNX2sCAlEbZ7sPWuYvt5I2NXjNP_4hMw: answers.stagingWebAPIKey,
+      'staging.firebun.dev': answers.stagingAuthDomain,
+
+      AIzaSyA7kMGa_QFHrP7Cpt_KPtgKq97eyZ0wzcg:
+        answers.productionWebAPIKey || answers.stagingWebAPIKey,
+      'firebun.dev': answers.productionAuthDomain || answers.stagingAuthDomain
+    },
+
     [resolve(rootPath, 'bun.config.ts')]: {
       [config.name]: answers.name,
       [config.projects.production]: answers.productionProjectId as string,
