@@ -17,7 +17,7 @@ rm -rf scripts/initialize
 
 echo "(｡◕‿‿◕｡) Creating git commit with the initial config"
 git add scripts/initialize bun.config.ts
-git commit -c 'ᕕ( ᐛ )ᕗ Initialize the app'
+git commit -m 'ᕕ( ᐛ )ᕗ Initialize the app'
 git stash pop
 
 echo "\( ﾟヮﾟ)/ It's ready!"
