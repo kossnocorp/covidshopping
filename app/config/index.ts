@@ -44,4 +44,4 @@ if (!configs[appEnv])
 const config = configs[appEnv] as RuntimeConfig
 
 export default config
-export { appConfig }
+export { appConfig, configs }
