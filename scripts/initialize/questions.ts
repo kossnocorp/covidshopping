@@ -2,6 +2,7 @@ import inquirer from 'inquirer'
 import { readFile, readFileSync, writeFile } from 'mz/fs'
 import { resolve } from 'path'
 import config from '../../bun.config'
+import chalk from 'chalk'
 
 const rootPath = process.cwd()
 
@@ -92,6 +93,11 @@ function firebaseQuestions(env: 'production' | 'staging') {
 }
 
 async function main() {
+  console.log(
+    `(ﾉ◕ヮ◕)ﾉ*:・ﾟ✧ Follow ${chalk.bold.underline(
+      'git.io/fjjzc'
+    )} for details about each setting`
+  )
   const answers = await inquirer.prompt<Answers>(
     ([appNameQuestion, portQuestion] as any[]) // TODO: How to get rid of any[]?
       .concat(firebaseQuestions('staging'))

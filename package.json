@@ -17,6 +17,7 @@
   "devDependencies": {
     "@types/inquirer": "^6.5.0",
     "@types/mz": "^0.0.32",
+    "chalk": "^2.4.2",
     "inquirer": "^7.0.0",
     "mz": "^2.7.0",
     "ts-node": "^8.3.0",
