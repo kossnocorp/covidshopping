@@ -17,7 +17,7 @@ ts-node ./scripts/initialize/questions.ts
 rm -rf scripts/initialize
 
 echo "(｡◕‿‿◕｡) Creating git commit with the initial config"
-git add scripts/initialize bun.config.ts
+git add app/config/index.ts scripts/initialize bun.config.ts
 git commit -m 'ᕕ( ᐛ )ᕗ Initialize the app'
 git stash pop
 
