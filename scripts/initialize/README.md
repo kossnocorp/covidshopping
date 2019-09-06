@@ -21,3 +21,14 @@ and then run:
 yarn
 make start
 ```
+
+## Settings
+
+During the initialization you'll be asked to answer few questions:
+
+- App name
+- Server port
+- Staging Firebase project id
+- etc
+
+TODO
