@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PATH="$PATH:$(npm bin)"
+
 if [ -n "$SKIP_INIT" ]; then
   exit 0
 fi
@@ -8,6 +10,9 @@ set -e
 
 echo "(~‾▿‾)~ Initializing your application for the first time"
 git stash
+
+echo "｡(-‿•)｡ Installing fresh dependecies"
+npm i --save firebase@latest firebase-admin@latest firebase-functions@latest firebun@latest
 
 echo "( ͡° ͜ʖ ͡°) It's settings time!"
 ts-node ./scripts/initialize/questions.ts

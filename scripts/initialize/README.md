@@ -18,7 +18,7 @@ Or you can use [firebun-app as a GitHub repo template](https://git.io/fjxME)
 and then run:
 
 ```bash
-yarn
+npm install
 make start
 ```
 
