@@ -8,8 +8,8 @@ export interface FirebaseWebConfig {
 }
 
 const stagingFirebase: FirebaseWebConfig = {
-  apiKey: 'AIzaSyAcNX2sCAlEbZ7sPWuYvt5I2NXjNP_4hMw',
-  authDomain: 'staging.firebun.dev',
+  apiKey: 'AIzaSyDa5pC29aU11RR0xbHH0BUXnwV8CDPPfRo',
+  authDomain: 'staging.covidgroceries.com',
   projectId: appConfig.projects.staging
 }
 
@@ -33,8 +33,8 @@ const configs: {
 
   production: {
     firebase: {
-      apiKey: 'AIzaSyA7kMGa_QFHrP7Cpt_KPtgKq97eyZ0wzcg',
-      authDomain: 'firebun.dev',
+      apiKey: 'AIzaSyBv1UnDo_P_lhWB0qHfuxOMN70xtsTnxYU',
+      authDomain: 'covidgroceries.com',
       projectId: appConfig.projects.production
     }
   }

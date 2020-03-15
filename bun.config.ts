@@ -1,9 +1,9 @@
 import { AppConfig } from 'firebun/config/types'
 
 const config: AppConfig = {
-  name: 'Firebun App',
+  name: 'The Coronavirus shopping list generator',
 
-  port: 4000,
+  port: 8000,
 
   // Sync with tsconfig.json?
   paths: {
@@ -11,8 +11,8 @@ const config: AppConfig = {
   },
 
   projects: {
-    production: 'firebun-25bba',
-    staging: 'firebun-staging-7a35e'
+    production: 'covidgroceries',
+    staging: 'covidgroceries-staging'
   },
 
   rewrites: [
