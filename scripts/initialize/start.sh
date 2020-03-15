@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export PATH="$PATH:$(npm bin)"
+export PATH="$(npm bin):$PATH"
 
 if [ -n "$SKIP_INIT" ]; then
   exit 0
