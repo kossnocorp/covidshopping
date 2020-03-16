@@ -34,12 +34,12 @@ type Ingredient = {
 }
 
 type Meal = Item & {
-  sauces?: {
-    [sauceKey: string]: Sauce
+  sides?: {
+    [sideKey: string]: Item
   }
 
-  courses?: {
-    [coursesKey: string]: Item
+  sauces?: {
+    [sauceKey: string]: Sauce
   }
 
   ingredients?: {
@@ -60,6 +60,87 @@ type Formula = Record<MealCategory, { [mealId: string]: Meal }> & {
 
 type FormulaInfo = {
   options: Record<MealCategory | 'drinks', number>
+}
+
+const pasta: Item = {
+  title: 'Pasta',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const rice: Item = {
+  title: 'Rice',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const chickpeas: Item = {
+  title: 'Chickpeas',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const bulgur: Item = {
+  title: 'Bulgur',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const lentils: Item = {
+  title: 'Lentils',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const couscous: Item = {
+  title: 'Couscous',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const buckwheat: Item = {
+  title: 'Buckwheat',
+  include: false,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g'
+}
+
+const pesto: Sauce = {
+  title: 'Pesto',
+  include: true,
+  serving: 0.5,
+  kidsModifier: 0.5,
+  unit: 'number'
+}
+
+const arrabiata: Sauce = {
+  title: 'Arrabiata',
+  include: true,
+  serving: 0.5,
+  kidsModifier: 0.5,
+  unit: 'number',
+  spicy: 'low'
+}
+
+const tomato: Sauce = {
+  title: 'Tomato',
+  serving: 0.5,
+  kidsModifier: 0.5,
+  unit: 'number',
+  include: true
 }
 
 export default function HomePage() {
@@ -123,157 +204,31 @@ export default function HomePage() {
     },
 
     meals: {
-      pasta: {
-        title: 'Pasta',
+      veggie: {
+        title: 'Veggie',
         include: true,
         serving: 125,
         kidsModifier: 0.5,
         unit: 'g',
+        sides: { pasta, rice, bulgur, lentils, couscous }
+      },
 
-        sauces: {
-          pesto: {
-            title: 'Pesto',
-            include: true,
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number'
-          },
-
-          arrabiata: {
-            title: 'Arrabiata',
-            include: true,
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number',
-            spicy: 'low'
-          },
-
-          tomato: {
-            title: 'Tomato',
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number',
-            include: true
-          }
-        },
-
-        courses: {
-          veggie: {
-            title: 'Veggie',
-            include: true,
-            serving: 125,
-            kidsModifier: 0.5,
-            unit: 'g'
-          },
-
-          chicken: {
-            title: 'Chicken',
-            include: true,
-            serving: 125,
-            kidsModifier: 0.5,
-            unit: 'g'
-          }
-        }
+      chicken: {
+        title: 'Chicken',
+        include: true,
+        serving: 125,
+        kidsModifier: 0.5,
+        unit: 'g',
+        sides: { pasta, rice, bulgur, couscous }
       },
 
       ravioli: {
         title: 'Ravioli',
         include: true,
-        serving: 150,
-        kidsModifier: 0.5,
-        unit: 'g',
-        sauces: {
-          pesto: {
-            title: 'Pesto',
-            include: true,
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number'
-          },
-
-          arrabiata: {
-            title: 'Arrabiata',
-            include: true,
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number',
-            spicy: 'low'
-          },
-
-          tomato: {
-            title: 'Tomato',
-            serving: 0.5,
-            kidsModifier: 0.5,
-            unit: 'number',
-            include: true
-          }
-        }
-      },
-
-      rice: {
-        title: 'Rice',
-        include: true,
         serving: 125,
         kidsModifier: 0.5,
         unit: 'g',
-
-        courses: {
-          veggie: {
-            title: 'Veggie',
-            include: true,
-            serving: 125,
-            kidsModifier: 0.5,
-            unit: 'g'
-          },
-
-          chicken: {
-            title: 'Chicken',
-            include: true,
-            serving: 125,
-            kidsModifier: 0.5,
-            unit: 'g'
-          }
-        }
-      },
-
-      chickpeas: {
-        title: 'Chickpeas',
-        include: true,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g'
-      },
-
-      bulgur: {
-        title: 'Bulgur',
-        include: true,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g'
-      },
-
-      lentils: {
-        title: 'Lentils',
-        include: true,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g'
-      },
-
-      couscous: {
-        title: 'Couscous',
-        include: true,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g'
-      },
-
-      buckwheat: {
-        title: 'Buckwheat',
-        include: false,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g'
+        sauces: { pesto, arrabiata, tomato }
       }
     },
 
@@ -537,7 +492,9 @@ function MealFields<
   mealKey: keyof Formula[Category]
 }) {
   const meal = formula[category][mealKey]
-  const servings = calculateServings(formula, meal, info.options[category])
+  const servings =
+    calculateServings(formula, meal, info.options[category]) *
+    (category === 'meals' ? 2 : 1)
   const quantity = Math.ceil(servings * meal.serving)
 
   return (
@@ -619,31 +576,31 @@ function MealFields<
           </H>
         )}
 
-        {meal.include && meal.courses && (
+        {meal.include && meal.sides && (
           <H size={Size.Small} adjusted>
             <Text color={Color.Secondary} bold>
-              Course
+              Sides
             </Text>
 
-            {Object.entries(meal.courses).map(([courseKey, course]) => (
+            {Object.entries(meal.sides).map(([sideKey, side]) => (
               <H tag="label" size={Size.XSmall} adjusted>
                 <input
                   type="checkbox"
-                  checked={course.include}
+                  checked={side.include}
                   onChange={(e: JSX.TargetedEvent) => {
                     const target = e.target as HTMLInputElement
                     setFormula(
                       cloneUpdate(
                         formula,
                         // @ts-ignore
-                        [category, mealKey, 'courses', courseKey, 'include'],
+                        [category, mealKey, 'sides', sideKey, 'include'],
                         () => target.checked
                       )
                     )
                   }}
                 />
 
-                <Text color={Color.Secondary}>{course.title}</Text>
+                <Text color={Color.Secondary}>{side.title}</Text>
               </H>
             ))}
           </H>
@@ -652,7 +609,7 @@ function MealFields<
 
       {meal.include && (
         <Text color={Color.Secondary} size={Size.Small}>
-          {servings} servings
+          {pluralize('serving', servings, true)}
         </Text>
       )}
     </V>
