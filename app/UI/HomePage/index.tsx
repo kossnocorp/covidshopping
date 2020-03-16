@@ -143,127 +143,123 @@ export default function HomePage() {
 
   return (
     <ContentWrapper size={Size.Large} aligned>
-      <V>
+      <V size={Size.Large}>
         <Header>The Coronavirus shopping list generator</Header>
 
         <V>
-          <V size={Size.Small}>
-            <H>
-              <H tag="label" size={Size.Small}>
-                <Text>Number of adults</Text>
-                <Select
-                  tag="select"
-                  name="adults"
-                  size={Size.Small}
-                  value={formula.adults}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLSelectElement
-                    setFormula(
-                      cloneUpdate(formula, ['adults'], () =>
-                        parseInt(target.value)
-                      )
+          <H>
+            <H tag="label" size={Size.Small}>
+              <Text>Number of adults</Text>
+              <Select
+                tag="select"
+                name="adults"
+                size={Size.Small}
+                value={formula.adults}
+                onChange={(e: JSX.TargetedEvent) => {
+                  const target = e.target as HTMLSelectElement
+                  setFormula(
+                    cloneUpdate(formula, ['adults'], () =>
+                      parseInt(target.value)
                     )
-                  }}
-                >
-                  {new Array(11).fill(null).map((_, num) => (
-                    <option value={num} key={num}>
-                      {num}
-                    </option>
-                  ))}
-                </Select>
-              </H>
-
-              <H tag="label" size={Size.Small}>
-                <Text>kids</Text>
-                <Select
-                  tag="select"
-                  name="kids"
-                  size={Size.Small}
-                  value={formula.kids}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLSelectElement
-                    setFormula(
-                      cloneUpdate(formula, ['kids'], () =>
-                        parseInt(target.value)
-                      )
-                    )
-                  }}
-                >
-                  {new Array(11).fill(null).map((_, num) => (
-                    <option value={num} key={num}>
-                      {num}
-                    </option>
-                  ))}
-                </Select>
-              </H>
+                  )
+                }}
+              >
+                {new Array(11).fill(null).map((_, num) => (
+                  <option value={num} key={num}>
+                    {num}
+                  </option>
+                ))}
+              </Select>
             </H>
 
             <H tag="label" size={Size.Small}>
-              <Text>Number of days</Text>
+              <Text>kids</Text>
               <Select
                 tag="select"
                 name="kids"
                 size={Size.Small}
-                value={formula.days}
+                value={formula.kids}
                 onChange={(e: JSX.TargetedEvent) => {
                   const target = e.target as HTMLSelectElement
                   setFormula(
-                    cloneUpdate(formula, ['days'], () => parseInt(target.value))
+                    cloneUpdate(formula, ['kids'], () => parseInt(target.value))
                   )
                 }}
               >
-                {new Array(32).fill(null).map((_, num) => (
+                {new Array(11).fill(null).map((_, num) => (
                   <option value={num} key={num}>
                     {num}
                   </option>
-                ))}{' '}
+                ))}
               </Select>
             </H>
+          </H>
+
+          <H tag="label" size={Size.Small}>
+            <Text>Number of days</Text>
+            <Select
+              tag="select"
+              name="kids"
+              size={Size.Small}
+              value={formula.days}
+              onChange={(e: JSX.TargetedEvent) => {
+                const target = e.target as HTMLSelectElement
+                setFormula(
+                  cloneUpdate(formula, ['days'], () => parseInt(target.value))
+                )
+              }}
+            >
+              {new Array(32).fill(null).map((_, num) => (
+                <option value={num} key={num}>
+                  {num}
+                </option>
+              ))}{' '}
+            </Select>
+          </H>
+        </V>
+
+        <V>
+          <Header size={Size.XSmall}>Essentials</Header>
+
+          <V size={Size.Small}>
+            {Object.keys(formula.items).map(key => (
+              <ItemFields
+                formula={formula}
+                setFormula={setFormula}
+                itemKey={key}
+                key={key}
+              />
+            ))}
           </V>
 
-          <V>
-            <V size={Size.Small}>
-              <Header size={Size.XSmall}>Items</Header>
+          <Header size={Size.XSmall}>Breakfast</Header>
 
-              {Object.keys(formula.items).map(key => (
-                <ItemFields
-                  formula={formula}
-                  setFormula={setFormula}
-                  itemKey={key}
-                  key={key}
-                />
-              ))}
-            </V>
+          <V size={Size.Small}>
+            {Object.keys(formula.breakfast).map(key => (
+              <MealFields
+                formula={formula}
+                setFormula={setFormula}
+                info={info}
+                category="breakfast"
+                mealKey={key}
+                key={key}
+              />
+            ))}
+          </V>
 
-            <V size={Size.Small}>
-              <Header size={Size.XSmall}>Breakfast</Header>
+          <Header size={Size.XSmall}>Meals</Header>
 
-              {Object.keys(formula.breakfast).map(key => (
-                <MealFields
-                  formula={formula}
-                  setFormula={setFormula}
-                  info={info}
-                  category="breakfast"
-                  mealKey={key}
-                  key={key}
-                />
-              ))}
-            </V>
-
-            <V size={Size.Small}>
-              <Header size={Size.XSmall}>Meals</Header>
-
-              {Object.keys(formula.meals).map(key => (
-                <MealFields
-                  formula={formula}
-                  setFormula={setFormula}
-                  info={info}
-                  category="meals"
-                  mealKey={key}
-                  key={key}
-                />
-              ))}
-            </V>
+          <V size={Size.Small}>
+            {Object.keys(formula.meals).map(key => (
+              <MealFields
+                formula={formula}
+                setFormula={setFormula}
+                info={info}
+                category="meals"
+                mealKey={key}
+                key={key}
+              />
+            ))}
           </V>
         </V>
       </V>
@@ -346,7 +342,10 @@ function MealFields<
       <Text color={meal.include ? Color.Ink : Color.Secondary}>
         {meal.title}
         {meal.include
-          ? `: ${formatQuantity(calculateItem(formula, meal), meal.unit)}`
+          ? `: ${formatQuantity(
+              calculateItem(formula, meal, info.options[category]),
+              meal.unit
+            )}`
           : ''}
       </Text>
     </H>
