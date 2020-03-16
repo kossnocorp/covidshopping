@@ -2,7 +2,7 @@ import { ContentWrapper } from '#GECK/UI/Layout'
 import { V, H } from '#GECK/UI/Spacing'
 import { Header, Text } from '#GECK/UI/Text'
 import { Size, Color } from '#GECK/UI/types'
-import { h } from 'preact'
+import { h, Fragment } from 'preact'
 import { Select } from '#GECK/form/Select'
 import { JSX } from 'preact'
 import { useState } from 'preact/hooks'
@@ -26,6 +26,12 @@ type Sauce = Item & {
   spicy?: 'low' | 'mild' | 'hot' | 'extreme'
 }
 
+type Side = Item & {
+  sauces?: {
+    [sauceKey: string]: Sauce
+  }
+}
+
 type Ingredient = {
   title: string
   quantity: number
@@ -35,7 +41,7 @@ type Ingredient = {
 
 type Meal = Item & {
   sides?: {
-    [sideKey: string]: Item
+    [sideKey: string]: Side
   }
 
   sauces?: {
@@ -62,15 +68,41 @@ type FormulaInfo = {
   options: Record<MealCategory | 'drinks', number>
 }
 
-const pasta: Item = {
-  title: 'Pasta',
+const pesto: Sauce = {
+  title: 'Pesto',
   include: true,
-  serving: 125,
+  serving: 50,
   kidsModifier: 0.5,
   unit: 'g'
 }
 
-const rice: Item = {
+const arrabiata: Sauce = {
+  title: 'Arrabiata',
+  include: true,
+  serving: 50,
+  kidsModifier: 0.5,
+  unit: 'g',
+  spicy: 'low'
+}
+
+const tomato: Sauce = {
+  title: 'Tomato',
+  serving: 50,
+  kidsModifier: 0.5,
+  unit: 'g',
+  include: true
+}
+
+const pasta: Side = {
+  title: 'Pasta',
+  include: true,
+  serving: 125,
+  kidsModifier: 0.5,
+  unit: 'g',
+  sauces: { pesto, arrabiata, tomato }
+}
+
+const rice: Side = {
   title: 'Rice',
   include: true,
   serving: 125,
@@ -78,7 +110,7 @@ const rice: Item = {
   unit: 'g'
 }
 
-const chickpeas: Item = {
+const chickpeas: Side = {
   title: 'Chickpeas',
   include: true,
   serving: 125,
@@ -86,7 +118,7 @@ const chickpeas: Item = {
   unit: 'g'
 }
 
-const bulgur: Item = {
+const bulgur: Side = {
   title: 'Bulgur',
   include: true,
   serving: 125,
@@ -94,7 +126,7 @@ const bulgur: Item = {
   unit: 'g'
 }
 
-const lentils: Item = {
+const lentils: Side = {
   title: 'Lentils',
   include: true,
   serving: 125,
@@ -102,7 +134,7 @@ const lentils: Item = {
   unit: 'g'
 }
 
-const couscous: Item = {
+const couscous: Side = {
   title: 'Couscous',
   include: true,
   serving: 125,
@@ -110,7 +142,7 @@ const couscous: Item = {
   unit: 'g'
 }
 
-const buckwheat: Item = {
+const buckwheat: Side = {
   title: 'Buckwheat',
   include: false,
   serving: 125,
@@ -118,29 +150,12 @@ const buckwheat: Item = {
   unit: 'g'
 }
 
-const pesto: Sauce = {
-  title: 'Pesto',
-  include: true,
-  serving: 0.5,
+const potato: Side = {
+  title: 'Potato',
+  include: false,
+  serving: 125,
   kidsModifier: 0.5,
-  unit: 'number'
-}
-
-const arrabiata: Sauce = {
-  title: 'Arrabiata',
-  include: true,
-  serving: 0.5,
-  kidsModifier: 0.5,
-  unit: 'number',
-  spicy: 'low'
-}
-
-const tomato: Sauce = {
-  title: 'Tomato',
-  serving: 0.5,
-  kidsModifier: 0.5,
-  unit: 'number',
-  include: true
+  unit: 'g'
 }
 
 export default function HomePage() {
@@ -210,16 +225,7 @@ export default function HomePage() {
         serving: 125,
         kidsModifier: 0.5,
         unit: 'g',
-        sides: { pasta, rice, bulgur, lentils, couscous }
-      },
-
-      chicken: {
-        title: 'Chicken',
-        include: true,
-        serving: 125,
-        kidsModifier: 0.5,
-        unit: 'g',
-        sides: { pasta, rice, bulgur, couscous }
+        sides: { pasta, rice, bulgur, lentils, couscous, potato, buckwheat }
       },
 
       ravioli: {
@@ -229,6 +235,24 @@ export default function HomePage() {
         kidsModifier: 0.5,
         unit: 'g',
         sauces: { pesto, arrabiata, tomato }
+      },
+
+      chicken: {
+        title: 'Chicken',
+        include: true,
+        serving: 125,
+        kidsModifier: 0.5,
+        unit: 'g',
+        sides: { pasta, rice, bulgur, couscous, potato, buckwheat }
+      },
+
+      meat: {
+        title: 'Meat',
+        include: true,
+        serving: 125,
+        kidsModifier: 0.5,
+        unit: 'g',
+        sides: { pasta, rice, bulgur, couscous, potato, buckwheat }
       }
     },
 
@@ -336,94 +360,92 @@ export default function HomePage() {
           </H>
         </V>
 
-        <V>
-          <Header size={Size.XSmall}>Essentials</Header>
+        <Header>Essentials</Header>
 
-          <V size={Size.Small}>
-            {Object.keys(formula.items).map(key => (
-              <ItemFields
-                formula={formula}
-                setFormula={setFormula}
-                itemKey={key}
-                key={key}
-              />
-            ))}
-          </V>
-
-          <V size={Size.Small}>
-            <Header size={Size.XSmall}>Breakfast</Header>
-
-            <Text color={Color.Secondary}>
-              {calculateServingsTotal(formula)} servings (
-              {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
-              {pluralize('adult', formula.adults, true)}
-              {formula.kids
-                ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                    formula.kidsModifier
-                  }`
-                : ''}
-              {formula.kids ? `)` : ''})
-            </Text>
-          </V>
-
-          <V size={Size.Small}>
-            {Object.keys(formula.breakfast).map(key => (
-              <MealFields
-                formula={formula}
-                setFormula={setFormula}
-                info={info}
-                category="breakfast"
-                mealKey={key}
-                key={key}
-              />
-            ))}
-          </V>
-
-          <V size={Size.Small}>
-            <Header size={Size.XSmall}>Meals</Header>
-
-            <Text color={Color.Secondary}>
-              {calculateServingsTotal(formula) * 2} servings (2 meals per day ×{' '}
-              {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
-              {pluralize('adult', formula.adults, true)}
-              {formula.kids
-                ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                    formula.kidsModifier
-                  }`
-                : ''}
-              {formula.kids ? `)` : ''})
-            </Text>
-          </V>
-
-          {Object.keys(formula.meals).map(key => (
-            <MealFields
+        <V size={Size.Small}>
+          {Object.keys(formula.items).map(key => (
+            <ItemFields
               formula={formula}
               setFormula={setFormula}
-              info={info}
-              category="meals"
-              mealKey={key}
-              key={key}
-            />
-          ))}
-
-          <V size={Size.Small}>
-            <Header size={Size.XSmall}>Drinks</Header>
-
-            <Text color={Color.Secondary}>
-              Three drinks per day per person. At breakfast, lunch, and dinner.
-            </Text>
-          </V>
-
-          {Object.keys(formula.drinks).map(key => (
-            <DrinkFields
-              formula={formula}
-              setFormula={setFormula}
-              info={info}
               itemKey={key}
               key={key}
             />
           ))}
         </V>
+
+        <V size={Size.Small}>
+          <Header>Breakfast</Header>
+
+          <Text color={Color.Secondary}>
+            {calculateServingsTotal(formula)} servings (
+            {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
+            {pluralize('adult', formula.adults, true)}
+            {formula.kids
+              ? ` + ${pluralize('kid', formula.kids, true)} × ${
+                  formula.kidsModifier
+                }`
+              : ''}
+            {formula.kids ? `)` : ''})
+          </Text>
+        </V>
+
+        <V size={Size.Small}>
+          {Object.keys(formula.breakfast).map(key => (
+            <MealFields
+              formula={formula}
+              setFormula={setFormula}
+              info={info}
+              category="breakfast"
+              mealKey={key}
+              key={key}
+            />
+          ))}
+        </V>
+
+        <V size={Size.Small}>
+          <Header>Meals</Header>
+
+          <Text color={Color.Secondary}>
+            {calculateServingsTotal(formula) * 2} servings (2 meals per day ×{' '}
+            {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
+            {pluralize('adult', formula.adults, true)}
+            {formula.kids
+              ? ` + ${pluralize('kid', formula.kids, true)} × ${
+                  formula.kidsModifier
+                }`
+              : ''}
+            {formula.kids ? `)` : ''})
+          </Text>
+        </V>
+
+        {Object.keys(formula.meals).map(key => (
+          <MealFields
+            formula={formula}
+            setFormula={setFormula}
+            info={info}
+            category="meals"
+            mealKey={key}
+            key={key}
+          />
+        ))}
+
+        <V size={Size.Small}>
+          <Header>Drinks</Header>
+
+          <Text color={Color.Secondary}>
+            Three drinks per day per person. At breakfast, lunch, and dinner.
+          </Text>
+        </V>
+
+        {Object.keys(formula.drinks).map(key => (
+          <DrinkFields
+            formula={formula}
+            setFormula={setFormula}
+            info={info}
+            itemKey={key}
+            key={key}
+          />
+        ))}
       </V>
     </ContentWrapper>
   )
@@ -496,11 +518,13 @@ function MealFields<
     calculateServings(formula, meal, info.options[category]) *
     (category === 'meals' ? 2 : 1)
   const quantity = Math.ceil(servings * meal.serving)
+  const sidesOptions = Object.values(meal.sides || {}).filter(s => s.include)
+    .length
 
   return (
-    <V size={Size.XSmall}>
+    <V size={Size.Small}>
       <H size={Size.Small} adjusted>
-        <H tag="label" size={Size.XSmall} adjusted>
+        <H tag="label" size={Size.Small} adjusted>
           <input
             type="checkbox"
             checked={meal.include}
@@ -516,9 +540,12 @@ function MealFields<
             }}
           />
 
-          <Text color={meal.include ? Color.Ink : Color.Secondary}>
+          <Header
+            color={meal.include ? Color.Ink : Color.Secondary}
+            size={Size.XSmall}
+          >
             {meal.title}
-          </Text>
+          </Header>
         </H>
 
         {meal.include && (
@@ -528,84 +555,177 @@ function MealFields<
         )}
       </H>
 
-      <H>
-        {meal.include && meal.ingredients && (
-          <Text color={Color.Secondary}>
-            Ingredients: (
-            {Object.values(meal.ingredients)
-              .map(
-                ingredient =>
-                  `${ingredient.title} ${formatQuantity(
-                    ingredient.quantity * quantity,
-                    ingredient.unit,
-                    ingredient.unitTitle
-                  )}`
-              )
-              .join(', ')}
-            )
-          </Text>
-        )}
+      {meal.include && (meal.sides || meal.ingredients || meal.sauces) && (
+        <H>
+          {meal.ingredients && (
+            <H size={Size.Small} adjusted>
+              <Text color={Color.Secondary} bold>
+                Ingredients
+              </Text>
 
-        {meal.include && meal.sauces && (
-          <H size={Size.Small} adjusted>
-            <Text color={Color.Secondary} bold>
-              Sauce
-            </Text>
+              <Text color={Color.Secondary}>
+                {Object.values(meal.ingredients)
+                  .map(
+                    ingredient =>
+                      `${ingredient.title} ${formatQuantity(
+                        ingredient.quantity * quantity,
+                        ingredient.unit,
+                        ingredient.unitTitle
+                      )}`
+                  )
+                  .join(', ')}
+              </Text>
+            </H>
+          )}
 
-            {Object.entries(meal.sauces).map(([sauceKey, sauce]) => (
-              <H tag="label" size={Size.XSmall} adjusted>
-                <input
-                  type="checkbox"
-                  checked={sauce.include}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLInputElement
-                    setFormula(
-                      cloneUpdate(
-                        formula,
-                        // @ts-ignore
-                        [category, mealKey, 'sauces', sauceKey, 'include'],
-                        () => target.checked
+          {meal.sauces && (
+            <H size={Size.Small} adjusted>
+              <Text color={Color.Secondary} bold>
+                Sauce
+              </Text>
+
+              {Object.entries(meal.sauces).map(([sauceKey, sauce]) => (
+                <H tag="label" size={Size.XSmall} adjusted>
+                  <input
+                    type="checkbox"
+                    checked={sauce.include}
+                    onChange={(e: JSX.TargetedEvent) => {
+                      const target = e.target as HTMLInputElement
+                      setFormula(
+                        cloneUpdate(
+                          formula,
+                          // @ts-ignore
+                          [category, mealKey, 'sauces', sauceKey, 'include'],
+                          () => target.checked
+                        )
                       )
-                    )
-                  }}
-                />
+                    }}
+                  />
 
-                <Text color={Color.Secondary}>{sauce.title}</Text>
-              </H>
-            ))}
-          </H>
-        )}
+                  <Text color={Color.Secondary}>{sauce.title}</Text>
+                </H>
+              ))}
+            </H>
+          )}
 
-        {meal.include && meal.sides && (
-          <H size={Size.Small} adjusted>
-            <Text color={Color.Secondary} bold>
-              Sides
-            </Text>
+          {meal.sides && (
+            <V size={Size.Small} adjusted>
+              <Text color={Color.Secondary} bold>
+                Sides
+              </Text>
 
-            {Object.entries(meal.sides).map(([sideKey, side]) => (
-              <H tag="label" size={Size.XSmall} adjusted>
-                <input
-                  type="checkbox"
-                  checked={side.include}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLInputElement
-                    setFormula(
-                      cloneUpdate(
-                        formula,
-                        // @ts-ignore
-                        [category, mealKey, 'sides', sideKey, 'include'],
-                        () => target.checked
-                      )
-                    )
-                  }}
-                />
+              {Object.entries(meal.sides).map(([sideKey, side]) => {
+                const sideSaucesOptions = Object.values(
+                  side.sauces || {}
+                ).filter(s => s.include).length
 
-                <Text color={Color.Secondary}>{side.title}</Text>
-              </H>
-            ))}
-          </H>
-        )}
-      </H>
+                return (
+                  <H adjusted>
+                    <H size={Size.Small} adjusted>
+                      <H tag="label" size={Size.XSmall} adjusted>
+                        <input
+                          type="checkbox"
+                          checked={side.include}
+                          onChange={(e: JSX.TargetedEvent) => {
+                            const target = e.target as HTMLInputElement
+                            setFormula(
+                              cloneUpdate(
+                                formula,
+                                [
+                                  category,
+                                  // @ts-ignore
+                                  mealKey,
+                                  // @ts-ignore
+                                  'sides',
+                                  sideKey,
+                                  'include'
+                                ],
+                                () => target.checked
+                              )
+                            )
+                          }}
+                        />
+
+                        <Text color={Color.Secondary}>{side.title}</Text>
+                      </H>
+
+                      {side.include && (
+                        <Text color={Color.Secondary} bold>
+                          {formatQuantity(
+                            Math.ceil((servings / sidesOptions) * side.serving),
+                            side.unit,
+                            side.unitTitle
+                          )}
+                        </Text>
+                      )}
+                    </H>
+
+                    {side.include && side.sauces && (
+                      <H size={Size.Small} adjusted>
+                        <Text color={Color.Secondary} bold>
+                          Sauces
+                        </Text>
+
+                        {Object.entries(side.sauces).map(
+                          ([sauceKey, sauce]) => (
+                            <H size={Size.Small} adjusted>
+                              <H tag="label" size={Size.XSmall} adjusted>
+                                <input
+                                  type="checkbox"
+                                  checked={sauce.include}
+                                  onChange={(e: JSX.TargetedEvent) => {
+                                    const target = e.target as HTMLInputElement
+                                    setFormula(
+                                      cloneUpdate(
+                                        formula,
+                                        [
+                                          category,
+                                          // @ts-ignore
+                                          mealKey,
+                                          // @ts-ignore
+                                          'sides',
+                                          sideKey,
+                                          'sauces',
+                                          sauceKey,
+                                          'include'
+                                        ],
+                                        () => target.checked
+                                      )
+                                    )
+                                  }}
+                                />
+
+                                <Text color={Color.Secondary}>
+                                  {sauce.title}
+                                </Text>
+                              </H>
+
+                              {sauce.include && (
+                                <Text color={Color.Secondary} bold>
+                                  {formatQuantity(
+                                    Math.ceil(
+                                      (servings /
+                                        sidesOptions /
+                                        sideSaucesOptions) *
+                                        sauce.serving
+                                    ),
+                                    sauce.unit,
+                                    sauce.unitTitle
+                                  )}
+                                </Text>
+                              )}
+                            </H>
+                          )
+                        )}
+                      </H>
+                    )}
+                  </H>
+                )
+              })}
+            </V>
+          )}
+        </H>
+      )}
 
       {meal.include && (
         <Text color={Color.Secondary} size={Size.Small}>
@@ -701,8 +821,6 @@ function formatQuantity(
       return `${quantity}g`
 
     case 'number':
-      return quantity.toString()
-
     case 'serving':
       return `${quantity}x`
   }
