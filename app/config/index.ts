@@ -15,6 +15,11 @@ const stagingFirebase: FirebaseWebConfig = {
 
 export type RuntimeConfig = {
   firebase: FirebaseWebConfig
+  gtag?: {
+    ga: string
+    app?: string
+    ads?: string
+  }
 }
 
 const configs: {

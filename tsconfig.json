@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "paths": {
       // How to sync with bun.config.ts?
-      "#app/*": ["app/*"]
+      "#app/*": ["app/*"],
+      "#GECK/*": ["GECK/*"]
     },
     "jsx": "react",
     "jsxFactory": "h",

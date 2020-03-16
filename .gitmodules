@@ -1,0 +1,3 @@
+[submodule "GECK"]
+	path = GECK
+	url = git@github.com:kossnocorp/GECK.git

@@ -1,0 +1,67 @@
+@import 'reset.css';
+@import '#GECK/UI/imports';
+
+:root {
+  --color-brand: #b7003b;
+  --color-brand-hover: #ff1f1f;
+  --color-canvas: #fff;
+  --color-ink: #2d0d00;
+  --color-text-secondary: #755f66;
+  --color-background-layout: #fff7f4;
+  --color-background-code: #fff1e5;
+  --color-link: var(--color-brand);
+  --color-link-hover: var(--color-brand-hover);
+  --Button-border-radius: 2px;
+  --color-background-content-secondary: #ffe4da;
+
+  --font-default: 'Lato', sans-serif;
+  --font-header: 'Lora', serif;
+}
+
+button {
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+
+  @media (--mobile-medium) {
+    font-size: 15px;
+  }
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
+  color: var(--color-text);
+  background: var(--color-background-layout);
+}
+
+body,
+input,
+button,
+textarea,
+select {
+  font-family: var(--font-default);
+}
+
+svg {
+  fill: currentColor;
+}
+
+body:global(.development) undefined {
+  display: block;
+  border: 1px solid magenta;
+}
+
+:global(#ui) {
+  height: 100%;
+}

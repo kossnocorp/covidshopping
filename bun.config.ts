@@ -7,7 +7,8 @@ const config: AppConfig = {
 
   // Sync with tsconfig.json?
   paths: {
-    '#app': 'app'
+    '#app': 'app',
+    '#GECK': 'GECK'
   },
 
   projects: {
