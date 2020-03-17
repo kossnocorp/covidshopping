@@ -91,6 +91,7 @@ export const potato: Side = {
 }
 
 export const defaultFormula: Formula = {
+  system: 'metric',
   days: 14,
   adults: 3,
   kids: 0,

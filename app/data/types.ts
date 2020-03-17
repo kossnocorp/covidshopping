@@ -1,3 +1,5 @@
+export type MeasurementSystem = 'metric' | 'imperial'
+
 export type QuantityUnit = 'g' | 'number' | 'serving'
 
 export type Item = {
@@ -45,6 +47,7 @@ export type Meal = Item & {
 export type MealCategory = 'breakfast' | 'meals'
 
 export type Formula = Record<MealCategory, { [mealId: string]: Meal }> & {
+  system: MeasurementSystem
   drinks: Record<string, Drink>
   items: Record<string, Item>
   adults: number

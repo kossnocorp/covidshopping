@@ -4,10 +4,16 @@ import { El, H, V } from '#GECK/UI/Spacing'
 import { Size } from '#GECK/UI/types'
 import { Header, Text } from '#GECK/UI/Text'
 import { Button } from '#GECK/UI/Button'
-import { ShoppingList } from '../../../data/types'
+import { ShoppingList, MeasurementSystem } from '../../../data/types'
 import { formatQuantity } from '#app/data/utils'
 
-export default function ShoppingList({ list }: { list: ShoppingList }) {
+export default function ShoppingList({
+  system,
+  list
+}: {
+  system: MeasurementSystem
+  list: ShoppingList
+}) {
   return (
     <Background>
       <El padded size={Size.XLarge}>
@@ -34,7 +40,12 @@ export default function ShoppingList({ list }: { list: ShoppingList }) {
                 <H key={itemKey} size={Size.Small} adjusted>
                   {item.title}{' '}
                   <Text bold>
-                    {formatQuantity(item.quantity, item.unit, item.unitTitle)}
+                    {formatQuantity(
+                      system,
+                      item.quantity,
+                      item.unit,
+                      item.unitTitle
+                    )}
                   </Text>
                 </H>
               )

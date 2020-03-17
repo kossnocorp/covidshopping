@@ -1,5 +1,5 @@
 import { defaultFormula } from '#app/data'
-import { Formula, FormulaInfo } from '#app/data/types'
+import { Formula, FormulaInfo, MeasurementSystem } from '#app/data/types'
 import {
   calculateQuantity,
   calculateServings,
@@ -46,6 +46,29 @@ export default function HomePage() {
           <Header>The Coronavirus shopping list generator</Header>
 
           <V>
+            <H tag="label" size={Size.Small}>
+              <Text>Measurement system</Text>
+              <Select
+                tag="select"
+                name="system"
+                size={Size.Small}
+                value={formula.system}
+                onChange={(e: JSX.TargetedEvent) => {
+                  const target = e.target as HTMLSelectElement
+                  setFormula(
+                    cloneUpdate(
+                      formula,
+                      ['system'],
+                      () => target.value as MeasurementSystem
+                    )
+                  )
+                }}
+              >
+                <option value="metric">Metric (g)</option>
+                <option value="imperial">Imperial (oz)</option>
+              </Select>
+            </H>
+
             <H tag="label" size={Size.Small}>
               <Text>Number of days</Text>
               <Select
@@ -208,7 +231,7 @@ export default function HomePage() {
         </V>
       </El>
 
-      <ShoppingList list={list} />
+      <ShoppingList system={formula.system} list={list} />
     </H>
   )
 }
@@ -250,6 +273,7 @@ function ItemFields({
       {item.include && (
         <Text bold>
           {formatQuantity(
+            formula.system,
             calculateQuantity(formula, item),
             item.unit,
             item.unitTitle
@@ -314,7 +338,12 @@ function MealFields<
 
         {meal.include && (
           <Text bold>
-            {formatQuantity(quantity, meal.unit, meal.unitTitle)}
+            {formatQuantity(
+              formula.system,
+              quantity,
+              meal.unit,
+              meal.unitTitle
+            )}
           </Text>
         )}
       </H>
@@ -332,6 +361,7 @@ function MealFields<
                   .map(
                     ingredient =>
                       `${ingredient.title} ${formatQuantity(
+                        formula.system,
                         ingredient.quantity * quantity,
                         ingredient.unit,
                         ingredient.unitTitle
@@ -373,6 +403,7 @@ function MealFields<
                   {sauce.include && (
                     <Text color={Color.Secondary} bold>
                       {formatQuantity(
+                        formula.system,
                         Math.ceil((servings / saucesOptions) * sauce.serving),
                         sauce.unit,
                         sauce.unitTitle
@@ -428,6 +459,7 @@ function MealFields<
                       {side.include && (
                         <Text color={Color.Secondary} bold>
                           {formatQuantity(
+                            formula.system,
                             Math.ceil((servings / sidesOptions) * side.serving),
                             side.unit,
                             side.unitTitle
@@ -479,6 +511,7 @@ function MealFields<
                               {sauce.include && (
                                 <Text color={Color.Secondary} bold>
                                   {formatQuantity(
+                                    formula.system,
                                     Math.ceil(
                                       (servings /
                                         sidesOptions /
@@ -551,6 +584,7 @@ function DrinkFields({
       {item.include && (
         <Text bold>
           {formatQuantity(
+            formula.system,
             calculateQuantity(formula, item, info.options.drinks) * 3,
             item.unit,
             item.unitTitle

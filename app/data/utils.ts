@@ -6,7 +6,8 @@ import {
   ShoppingList,
   FormulaInfo,
   MealCategory,
-  Ingredient
+  Ingredient,
+  MeasurementSystem
 } from './types'
 
 export function calculateServings(formula: Formula, item: Item, options = 1) {
@@ -32,6 +33,7 @@ export function calculateServingsTotal(formula: Formula) {
 }
 
 export function formatQuantity(
+  system: MeasurementSystem,
   quantity: number,
   unit: QuantityUnit,
   unitTitle?: string
@@ -42,7 +44,11 @@ export function formatQuantity(
 
   switch (unit) {
     case 'g':
-      return `${quantity}g`
+      if (system === 'metric') {
+        return `${quantity}g`
+      } else {
+        return `${Math.ceil(quantity / 28.35)}oz`
+      }
 
     case 'number':
     case 'serving':
