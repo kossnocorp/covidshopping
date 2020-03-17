@@ -16,9 +16,18 @@ import pluralize from 'pluralize'
 import { h, JSX } from 'preact'
 import { useState } from 'preact/hooks'
 import ShoppingList from './ShoppingList'
+import merge from 'lodash/merge'
+import { lsSet, lsGet } from '#GECK/browser'
 
 export default function HomePage() {
-  const [formula, setFormula] = useState<Formula>(defaultFormula)
+  const [formula, setFormulaState] = useState<Formula>(
+    merge(defaultFormula, lsGet('formula'))
+  )
+
+  const setFormula = (newFormula: Formula) => {
+    lsSet('formula', newFormula)
+    setFormulaState(newFormula)
+  }
 
   const info: FormulaInfo = {
     options: {

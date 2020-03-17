@@ -168,6 +168,15 @@ export const defaultFormula: Formula = {
       sauces: { pesto, arrabiata, tomato: tomatoSauce }
     },
 
+    fish: {
+      title: 'Fish',
+      include: true,
+      serving: 150,
+      kidsModifier: 0.5,
+      unit: 'g',
+      sides: { pasta, rice, couscous, potato, bulgur, buckwheat }
+    },
+
     chicken: {
       title: 'Chicken',
       include: true,
