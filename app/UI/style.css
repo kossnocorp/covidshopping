@@ -14,8 +14,8 @@
   --Button-border-radius: 2px;
   --color-background-content-secondary: #ffe4da;
 
-  --font-default: 'Lato', sans-serif;
-  --font-header: 'Lora', serif;
+  --font-default: 'Inter', sans-serif;
+  --font-header: var(--font-default);
 }
 
 button {

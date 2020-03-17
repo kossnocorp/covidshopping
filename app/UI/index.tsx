@@ -12,11 +12,7 @@ export default function UI({ initialURL }: { initialURL: string }) {
 
   return (
     <RouterContext.Provider value={router}>
-      <Wrapper>
-        <El size={Size.XLarge} padded fullWidth>
-          <Content />
-        </El>
-      </Wrapper>
+      <Content />
     </RouterContext.Provider>
   )
 }
