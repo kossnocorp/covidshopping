@@ -6,7 +6,6 @@ export type Item = {
   title: string
   include: boolean
   serving: number
-  kidsModifier: number
   unit: QuantityUnit
   unitTitle?: string
 }

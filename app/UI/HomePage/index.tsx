@@ -10,7 +10,7 @@ import {
 import { cloneUpdate } from '#GECK/fns'
 import { Select } from '#GECK/form/Select'
 import { El, H, V } from '#GECK/UI/Spacing'
-import { Header, Text } from '#GECK/UI/Text'
+import { Header, Text, Italic } from '#GECK/UI/Text'
 import { Color, Size } from '#GECK/UI/types'
 import pluralize from 'pluralize'
 import { h, JSX } from 'preact'
@@ -18,6 +18,7 @@ import { useState } from 'preact/hooks'
 import ShoppingList from './ShoppingList'
 import merge from 'lodash/merge'
 import { lsSet, lsGet } from '#GECK/browser'
+import Input from '#GECK/form/Input'
 
 export default function HomePage() {
   const [formula, setFormulaState] = useState<Formula>(
@@ -91,55 +92,88 @@ export default function HomePage() {
               </Select>
             </H>
 
-            <H>
-              <H tag="label" size={Size.Small}>
-                <Text>Number of adults</Text>
-                <Select
-                  tag="select"
-                  name="adults"
-                  size={Size.Small}
-                  value={formula.adults}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLSelectElement
-                    setFormula(
-                      cloneUpdate(formula, ['adults'], () =>
-                        parseInt(target.value)
+            <V size={Size.Small}>
+              <H>
+                <H tag="label" size={Size.Small}>
+                  <Text>Number of adults</Text>
+                  <Select
+                    tag="select"
+                    name="adults"
+                    size={Size.Small}
+                    value={formula.adults}
+                    onChange={(e: JSX.TargetedEvent) => {
+                      const target = e.target as HTMLSelectElement
+                      setFormula(
+                        cloneUpdate(formula, ['adults'], () =>
+                          parseInt(target.value)
+                        )
                       )
-                    )
-                  }}
-                >
-                  {new Array(11).fill(null).map((_, num) => (
-                    <option value={num} key={num}>
-                      {num}
-                    </option>
-                  ))}
-                </Select>
+                    }}
+                  >
+                    {new Array(11).fill(null).map((_, num) => (
+                      <option value={num} key={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </Select>
+                </H>
+
+                <H tag="label" size={Size.Small}>
+                  <Text>kids</Text>
+                  <Select
+                    tag="select"
+                    name="kids"
+                    size={Size.Small}
+                    value={formula.kids}
+                    onChange={(e: JSX.TargetedEvent) => {
+                      const target = e.target as HTMLSelectElement
+                      setFormula(
+                        cloneUpdate(formula, ['kids'], () =>
+                          parseInt(target.value)
+                        )
+                      )
+                    }}
+                  >
+                    {new Array(11).fill(null).map((_, num) => (
+                      <option value={num} key={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </Select>
+                </H>
               </H>
 
-              <H tag="label" size={Size.Small}>
-                <Text>kids</Text>
-                <Select
-                  tag="select"
-                  name="kids"
-                  size={Size.Small}
-                  value={formula.kids}
-                  onChange={(e: JSX.TargetedEvent) => {
-                    const target = e.target as HTMLSelectElement
-                    setFormula(
-                      cloneUpdate(formula, ['kids'], () =>
-                        parseInt(target.value)
+              <Text color={Color.Secondary}>
+                Children serving size is calculated as{' '}
+                <Italic tag="span">
+                  adult ×{' '}
+                  <Input
+                    tag="input"
+                    name=""
+                    size={Size.XSmall}
+                    type="number"
+                    value={formula.kidsModifier}
+                    step="0.1"
+                    max="1"
+                    min="0.1"
+                    style="width: 3rem; font-style: italic"
+                    onChange={(e: JSX.TargetedEvent) => {
+                      const target = e.target as HTMLSelectElement
+                      const parsedValue = parseFloat(target.value)
+                      const value =
+                        parsedValue < 0.1
+                          ? 0.1
+                          : parsedValue > 1
+                          ? 1
+                          : parsedValue
+                      setFormula(
+                        cloneUpdate(formula, ['kidsModifier'], () => value)
                       )
-                    )
-                  }}
-                >
-                  {new Array(11).fill(null).map((_, num) => (
-                    <option value={num} key={num}>
-                      {num}
-                    </option>
-                  ))}
-                </Select>
-              </H>
-            </H>
+                    }}
+                  />
+                </Italic>
+              </Text>
+            </V>
           </V>
 
           <Header>Essentials</Header>
@@ -160,14 +194,18 @@ export default function HomePage() {
 
             <Text color={Color.Secondary}>
               {calculateServingsTotal(formula)} servings (
-              {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
-              {pluralize('adult', formula.adults, true)}
-              {formula.kids
-                ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                    formula.kidsModifier
-                  }`
-                : ''}
-              {formula.kids ? `)` : ''})
+              <Italic tag="span">
+                {pluralize('day', formula.days, true)} ×{' '}
+                {formula.kids ? `(` : ''}
+                {pluralize('adult', formula.adults, true)}
+                {formula.kids
+                  ? ` + ${pluralize('kid', formula.kids, true)} × ${
+                      formula.kidsModifier
+                    }`
+                  : ''}
+                {formula.kids ? `)` : ''}
+              </Italic>
+              )
             </Text>
           </V>
 
@@ -188,15 +226,19 @@ export default function HomePage() {
             <Header>Meals</Header>
 
             <Text color={Color.Secondary}>
-              {calculateServingsTotal(formula) * 2} servings (2 meals per day ×{' '}
-              {pluralize('day', formula.days, true)} × {formula.kids ? `(` : ''}
-              {pluralize('adult', formula.adults, true)}
-              {formula.kids
-                ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                    formula.kidsModifier
-                  }`
-                : ''}
-              {formula.kids ? `)` : ''})
+              {calculateServingsTotal(formula) * 2} servings (
+              <Italic tag="span">
+                2 meals per day × {pluralize('day', formula.days, true)} ×{' '}
+                {formula.kids ? `(` : ''}
+                {pluralize('adult', formula.adults, true)}
+                {formula.kids
+                  ? ` + ${pluralize('kid', formula.kids, true)} × ${
+                      formula.kidsModifier
+                    }`
+                  : ''}
+                {formula.kids ? `)` : ''}
+              </Italic>
+              )
             </Text>
           </V>
 

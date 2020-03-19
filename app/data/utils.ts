@@ -12,7 +12,7 @@ import {
 
 export function calculateServings(formula: Formula, item: Item, options = 1) {
   return Math.ceil(
-    (formula.days * (formula.adults + formula.kids * item.kidsModifier)) /
+    (formula.days * (formula.adults + formula.kids * formula.kidsModifier)) /
       options
   )
 }
@@ -21,7 +21,7 @@ export function calculateQuantity(formula: Formula, item: Item, options = 1) {
   return Math.ceil(
     (formula.days *
       (formula.adults * item.serving +
-        formula.kids * item.serving * item.kidsModifier)) /
+        formula.kids * item.serving * formula.kidsModifier)) /
       options
   )
 }
