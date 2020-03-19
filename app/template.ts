@@ -29,13 +29,13 @@ export default function template({
     <!-- Twitter -->
     <meta name='twitter:card' content='summary_large_image'>
     <meta name='twitter:creator' content='@kossnocorp'>
-    <meta name='twitter:title' content='The Caronavirus shopping list generator'>
+    <meta name='twitter:title' content='The Coronavirus shopping list generator'>
     <meta name='twitter:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
     <meta name='twitter:image' content='http://covid.shopping/card.png'>
 
     <!-- Facebook -->
     <meta property='og:type' content='website'>
-    <meta property='og:title' content='The Caronavirus shopping list generator'>
+    <meta property='og:title' content='The Coronavirus shopping list generator'>
     <meta property='og:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
     <meta property='og:image' content='http://covid.shopping/card.png'>
     <meta property='og:image:width' content='1200'>
