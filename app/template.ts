@@ -18,11 +18,28 @@ export default function template({
   <head>
     <meta charset="utf-8">
     <title>${title}</title>
-    <meta name='description' content='${description}'>${
+    <meta name='description' content="${description}">${
     !canonical ? '' : `<link rel="canonical" href="${canonical}" />`
   }
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+    <!-- Social meta tags -->
+
+    <!-- Twitter -->
+    <meta name='twitter:card' content='summary_large_image'>
+    <meta name='twitter:creator' content='@kossnocorp'>
+    <meta name='twitter:title' content='The Caronavirus shopping list generator'>
+    <meta name='twitter:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
+    <meta name='twitter:image' content='http://covid.shopping/card.png'>
+
+    <!-- Facebook -->
+    <meta property='og:type' content='website'>
+    <meta property='og:title' content='The Caronavirus shopping list generator'>
+    <meta property='og:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
+    <meta property='og:image' content='http://covid.shopping/card.png'>
+    <meta property='og:image:width' content='1200'>
+    <meta property='og:image:height' content='628'>
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
