@@ -11,6 +11,7 @@ import db from '#app/db'
 import { add } from 'typesaurus'
 import { useContext } from 'preact/hooks'
 import { RouterContext } from '#app/router'
+import { I18nContext } from '#app/i18n'
 
 export default function ShoppingListPreview({
   system,
@@ -19,13 +20,15 @@ export default function ShoppingListPreview({
   system: MeasurementSystem
   list: ShoppingListProducts
 }) {
+  const { localeKey, locale } = useContext(I18nContext)
+
   const { navigate } = useContext(RouterContext)
   return (
     <Background>
       <El padded size={Size.XLarge}>
         <V size={Size.Large}>
           <H expanded adjusted>
-            <Header size={Size.Small}>Shopping list</Header>
+            <Header size={Size.Small}>{locale.sections.preview.title}</Header>
 
             <H size={Size.Small}>
               {false && (
@@ -42,13 +45,20 @@ export default function ShoppingListPreview({
                     products: list,
                     bought: {}
                   })
-                  navigate({
-                    name: 'list',
-                    params: { listId: addedList.ref.id }
-                  })
+                  if (localeKey === 'en') {
+                    navigate({
+                      name: 'list',
+                      params: { listId: addedList.ref.id }
+                    })
+                  } else {
+                    navigate({
+                      name: 'localized-list',
+                      params: { listId: addedList.ref.id, localeKey }
+                    })
+                  }
                 }}
               >
-                Share with family
+                {locale.sections.preview.share}
               </ActionButton>
             </H>
           </H>
@@ -57,9 +67,10 @@ export default function ShoppingListPreview({
             {Object.entries(list).map(([itemKey, item]) => {
               return (
                 <H key={itemKey} size={Size.Small} adjusted>
-                  {item.title}{' '}
+                  {locale.translate(item.title)}{' '}
                   <Text bold>
                     {formatQuantity(
+                      locale,
                       system,
                       item.quantity,
                       item.unit,

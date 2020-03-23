@@ -1,4 +1,3 @@
-import pluralize from 'pluralize'
 import {
   Formula,
   Item,
@@ -9,6 +8,7 @@ import {
   Ingredient,
   MeasurementSystem
 } from './types'
+import { I18nLocale } from '#app/i18n'
 
 export function calculateServings(formula: Formula, item: Item, options = 1) {
   return Math.ceil(
@@ -33,13 +33,14 @@ export function calculateServingsTotal(formula: Formula) {
 }
 
 export function formatQuantity(
+  locale: I18nLocale,
   system: MeasurementSystem,
   quantity: number,
   unit: QuantityUnit,
   unitTitle?: string
 ) {
   if (unitTitle) {
-    return pluralize(unitTitle, quantity, true)
+    return `${quantity} ${locale.pluralize(unitTitle, quantity)}`
   }
 
   switch (unit) {

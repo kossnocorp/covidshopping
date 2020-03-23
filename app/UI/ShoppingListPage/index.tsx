@@ -8,9 +8,12 @@ import { formatQuantity } from '#app/data/utils'
 import { update } from 'typesaurus'
 import { TextLink } from '#GECK/UI/TextLink'
 import { ContentWrapper } from '#GECK/UI/Layout'
+import { useContext } from 'preact/hooks'
+import { I18nContext } from '#app/i18n'
 
 export default function ShoppingListPage({ listId }: { listId: string }) {
   const list = useOnGet(db.lists, listId)
+  const { localeKey, locale } = useContext(I18nContext)
 
   return (
     <El size={Size.XLarge} padded>
@@ -18,12 +21,10 @@ export default function ShoppingListPage({ listId }: { listId: string }) {
         {list ? (
           <V size={Size.Large}>
             <V size={Size.Small}>
-              <Header size={Size.Small}>Shopping list</Header>
+              <Header size={Size.Small}>{locale.sections.list.title}</Header>
 
               <Text size={Size.Large} color={Color.Secondary}>
-                Share this page with your family. When you check an item, the
-                list updates automatically on all devices that have this page
-                open.
+                {locale.sections.list.description}
               </Text>
             </V>
 
@@ -51,10 +52,11 @@ export default function ShoppingListPage({ listId }: { listId: string }) {
                         color={bought ? Color.Secondary : Color.Ink}
                       >
                         <H adjusted size={Size.Small}>
-                          {product.title}
+                          {locale.translate(product.title)}
 
                           <Strong>
                             {formatQuantity(
+                              locale,
                               list.data.system,
                               product.quantity,
                               product.unit,
@@ -70,11 +72,16 @@ export default function ShoppingListPage({ listId }: { listId: string }) {
             </V>
 
             <Text color={Color.Secondary}>
-              The shopping list is generated using{' '}
-              <TextLink to={{ name: 'home' }}>
-                The Coronavirus shopping list
-              </TextLink>{' '}
-              generator
+              {locale.sections.list.generated.intro}{' '}
+              <TextLink
+                to={
+                  localeKey === 'en'
+                    ? { name: 'home' }
+                    : { name: 'localized-home', params: { localeKey } }
+                }
+              >
+                {locale.sections.list.generated.link}
+              </TextLink>
             </Text>
           </V>
         ) : (

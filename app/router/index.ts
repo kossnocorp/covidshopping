@@ -1,17 +1,16 @@
 import { createRouter, InferRouteRef, route } from '@switcher/preact'
+import { I18nLocaleKey } from '#app/i18n'
 
 export const appRoutes = [
-  route('home')('/')({
-    title: 'The Coronavirus shopping list generator',
-    description:
-      "What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list."
-  }),
+  route('home')('/')(),
 
-  route('list')<{ listId: string }>('/l/:listId')({
-    title: 'The Coronavirus shopping list',
-    description:
-      "What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list."
-  })
+  route('list')<{ listId: string }>('/l/:listId')(),
+
+  route('localized-list')<{ localeKey: I18nLocaleKey; listId: string }>(
+    '/:localeKey/l/:listId'
+  )(),
+
+  route('localized-home')<{ localeKey: I18nLocaleKey }>('/:localeKey')()
 ]
 
 // Routing methods

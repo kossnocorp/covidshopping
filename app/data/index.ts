@@ -16,7 +16,7 @@ export const arrabiata: Sauce = {
 }
 
 export const tomatoSauce: Sauce = {
-  title: 'Tomato',
+  title: 'Tomato sauce',
   serving: 50,
   unit: 'g',
   include: true

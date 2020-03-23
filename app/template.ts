@@ -29,14 +29,14 @@ export default function template({
     <!-- Twitter -->
     <meta name='twitter:card' content='summary_large_image'>
     <meta name='twitter:creator' content='@kossnocorp'>
-    <meta name='twitter:title' content='The Coronavirus shopping list generator'>
-    <meta name='twitter:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
+    <meta name='twitter:title' content="${title}">
+    <meta name='twitter:description' content="${description}">
     <meta name='twitter:image' content='http://covid.shopping/card.png'>
 
     <!-- Facebook -->
     <meta property='og:type' content='website'>
-    <meta property='og:title' content='The Coronavirus shopping list generator'>
-    <meta property='og:description' content="What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list.">
+    <meta property='og:title' content="${title}">
+    <meta property='og:description' content="${description}">
     <meta property='og:image' content='http://covid.shopping/card.png'>
     <meta property='og:image:width' content='1200'>
     <meta property='og:image:height' content='628'>
@@ -61,7 +61,7 @@ export default function template({
     <meta name="theme-color" content="#ffffff">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap&subset=cyrillic,latin-ext" rel="stylesheet">
     ${
       config.gtag
         ? `

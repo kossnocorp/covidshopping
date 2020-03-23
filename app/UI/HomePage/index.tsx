@@ -7,21 +7,22 @@ import {
   formatQuantity,
   generateShoppingList
 } from '#app/data/utils'
+import { I18nContext, locales } from '#app/i18n'
+import { lsGet, lsSet } from '#GECK/browser'
 import { cloneUpdate } from '#GECK/fns'
-import { Select } from '#GECK/form/Select'
-import { El, H, V } from '#GECK/UI/Spacing'
-import { Header, Text, Italic } from '#GECK/UI/Text'
-import { Color, Size } from '#GECK/UI/types'
-import pluralize from 'pluralize'
-import { h, JSX } from 'preact'
-import { useState } from 'preact/hooks'
-import ShoppingListPreview from './ShoppingListPreview'
-import merge from 'lodash/merge'
-import { lsSet, lsGet } from '#GECK/browser'
 import Input from '#GECK/form/Input'
-import Note from '#GECK/UI/Note'
+import { Select } from '#GECK/form/Select'
 import ExpandIcon from '#GECK/UI/Icon/angle-down'
 import CollapseIcon from '#GECK/UI/Icon/angle-up'
+import Note from '#GECK/UI/Note'
+import { El, H, V } from '#GECK/UI/Spacing'
+import { Header, Italic, Text } from '#GECK/UI/Text'
+import { TextLink } from '#GECK/UI/TextLink'
+import { Color, Size } from '#GECK/UI/types'
+import merge from 'lodash/merge'
+import { h, JSX } from 'preact'
+import { useContext, useState } from 'preact/hooks'
+import ShoppingListPreview from './ShoppingListPreview'
 
 export default function HomePage() {
   const [formula, setFormulaState] = useState<Formula>(
@@ -43,60 +44,60 @@ export default function HomePage() {
 
   const list = generateShoppingList(formula, info)
 
-  const aboutCollapsedFromLS = lsGet('aboutCollapsed')
-  const [aboutCollapsed, setAboutCollapsedState] = useState<boolean>(
-    typeof aboutCollapsedFromLS === 'boolean' ? aboutCollapsedFromLS : true
+  const showAboutFromLS = lsGet('showAbout')
+  const [showAbout, setShowAboutState] = useState<boolean>(
+    typeof showAboutFromLS === 'boolean' ? showAboutFromLS : true
   )
-  const setAboutCollapsed = (collapsed: boolean) => {
-    lsSet('aboutCollapsed', collapsed)
-    setAboutCollapsedState(collapsed)
+  const setShowAbout = (show: boolean) => {
+    lsSet('showAbout', show)
+    setShowAboutState(show)
   }
+
+  const { localeKey, locale } = useContext(I18nContext)
+
+  const totalServings = calculateServingsTotal(formula)
 
   return (
     <H distributed>
       <El padded size={Size.XLarge}>
         <V size={Size.Large}>
           <V>
-            <Header>The Coronavirus shopping list generator</Header>
+            <H>
+              <TextLink to={{ name: 'home' }} active={localeKey === 'en'}>
+                {locales.en.localeName}
+              </TextLink>
+
+              <TextLink
+                to={{ name: 'localized-home', params: { localeKey: 'ru' } }}
+                active={localeKey === 'ru'}
+              >
+                {locales.ru.localeName}
+              </TextLink>
+            </H>
+
+            <Header>{locale.title}</Header>
 
             <Note>
               <H expanded>
-                {aboutCollapsed ? (
-                  <Text content>
-                    <p>
-                      <strong>What is this app for?</strong> Use the generator
-                      to plan shopping for COVID-19 quarantine. Select the
-                      length of stay, number of people, menu, and get the list
-                      of products to buy.
-                    </p>
+                <Text
+                  content
+                  dangerouslySetInnerHTML={{
+                    __html: showAbout
+                      ? locale.about.expanded
+                      : locale.about.collapsed
+                  }}
+                />
 
-                    <p>
-                      Use the "Share with family" feature to generate a todo
-                      list and share it with your household or send it to your
-                      phone.
-                    </p>
-
-                    <p>
-                      <a href="mailto:koss@nocorp.me">Email me</a> if you have
-                      any feedback!
-                    </p>
-                  </Text>
-                ) : (
-                  <Text content>
-                    <strong>What is this app for?</strong>
-                  </Text>
-                )}
-
-                {aboutCollapsed ? (
+                {showAbout ? (
                   <CollapseIcon
                     trigger
-                    onClick={() => setAboutCollapsed(false)}
+                    onClick={() => setShowAbout(false)}
                     size={Size.Large}
                   />
                 ) : (
                   <ExpandIcon
                     trigger
-                    onClick={() => setAboutCollapsed(true)}
+                    onClick={() => setShowAbout(true)}
                     size={Size.Large}
                   />
                 )}
@@ -106,7 +107,8 @@ export default function HomePage() {
 
           <V>
             <H tag="label" size={Size.Small}>
-              <Text>Measurement system</Text>
+              <Text>{locale.measurement.system}</Text>
+
               <Select
                 tag="select"
                 name="system"
@@ -123,13 +125,15 @@ export default function HomePage() {
                   )
                 }}
               >
-                <option value="metric">Metric (g)</option>
-                <option value="imperial">Imperial (oz)</option>
+                <option value="metric">{locale.measurement.metric} (g)</option>
+                <option value="imperial">
+                  {locale.measurement.imperial} (oz)
+                </option>
               </Select>
             </H>
 
             <H tag="label" size={Size.Small}>
-              <Text>Number of days</Text>
+              <Text>{locale.numberOfDays}</Text>
               <Select
                 tag="select"
                 name="kids"
@@ -153,7 +157,8 @@ export default function HomePage() {
             <V size={Size.Small}>
               <H>
                 <H tag="label" size={Size.Small}>
-                  <Text>Number of adults</Text>
+                  <Text>{locale.numberOfAdults}</Text>
+
                   <Select
                     tag="select"
                     name="adults"
@@ -177,7 +182,7 @@ export default function HomePage() {
                 </H>
 
                 <H tag="label" size={Size.Small}>
-                  <Text>kids</Text>
+                  <Text>{locale.numberOfKids}</Text>
                   <Select
                     tag="select"
                     name="kids"
@@ -202,9 +207,9 @@ export default function HomePage() {
               </H>
 
               <Text color={Color.Secondary}>
-                Children serving size is calculated as{' '}
+                {locale.kidsServing.title}{' '}
                 <Italic tag="span">
-                  adult ×{' '}
+                  {locale.kidsServing.adult} ×{' '}
                   <Input
                     tag="input"
                     name=""
@@ -234,7 +239,7 @@ export default function HomePage() {
             </V>
           </V>
 
-          <Header>Essentials</Header>
+          <Header>{locale.sections.essentials.title}</Header>
 
           <V size={Size.Small}>
             {Object.keys(formula.items).map(key => (
@@ -248,18 +253,19 @@ export default function HomePage() {
           </V>
 
           <V size={Size.Small}>
-            <Header>Breakfast</Header>
+            <Header>{locale.sections.breakfast.title}</Header>
 
             <Text color={Color.Secondary}>
-              {calculateServingsTotal(formula)} servings (
+              {totalServings} {locale.pluralize('serving', totalServings)} (
               <Italic tag="span">
-                {pluralize('day', formula.days, true)} ×{' '}
+                {formula.days} {locale.pluralize('day', formula.days)} ×{' '}
                 {formula.kids ? `(` : ''}
-                {pluralize('adult', formula.adults, true)}
+                {formula.adults} {locale.pluralize('adult', formula.adults)}
                 {formula.kids
-                  ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                      formula.kidsModifier
-                    }`
+                  ? ` + ${formula.kids} ${locale.pluralize(
+                      'kid',
+                      formula.kids
+                    )} × ${formula.kidsModifier}`
                   : ''}
                 {formula.kids ? `)` : ''}
               </Italic>
@@ -281,18 +287,21 @@ export default function HomePage() {
           </V>
 
           <V size={Size.Small}>
-            <Header>Meals</Header>
+            <Header>{locale.sections.meals.title}</Header>
 
             <Text color={Color.Secondary}>
-              {calculateServingsTotal(formula) * 2} servings (
+              {totalServings * 2}{' '}
+              {locale.pluralize('serving', totalServings * 2)} (
               <Italic tag="span">
-                2 meals per day × {pluralize('day', formula.days, true)} ×{' '}
+                {locale.sections.meals.formula.intro} × {formula.days}{' '}
+                {locale.pluralize('day', formula.days)} ×{' '}
                 {formula.kids ? `(` : ''}
-                {pluralize('adult', formula.adults, true)}
+                {formula.adults} {locale.pluralize('adult', formula.adults)}
                 {formula.kids
-                  ? ` + ${pluralize('kid', formula.kids, true)} × ${
-                      formula.kidsModifier
-                    }`
+                  ? ` + ${formula.kids} ${locale.pluralize(
+                      'kid',
+                      formula.kids
+                    )} × ${formula.kidsModifier}`
                   : ''}
                 {formula.kids ? `)` : ''}
               </Italic>
@@ -312,10 +321,10 @@ export default function HomePage() {
           ))}
 
           <V size={Size.Small}>
-            <Header>Drinks</Header>
+            <Header>{locale.sections.drinks.title}</Header>
 
             <Text color={Color.Secondary}>
-              Three drinks per day per person. At breakfast, lunch, and dinner.
+              {locale.sections.drinks.description}
             </Text>
           </V>
 
@@ -346,6 +355,7 @@ function ItemFields({
   itemKey: keyof Formula['items']
 }) {
   const item = formula.items[itemKey]
+  const { locale } = useContext(I18nContext)
 
   return (
     <H size={Size.Small} adjusted>
@@ -366,13 +376,14 @@ function ItemFields({
         />
 
         <Text color={item.include ? Color.Ink : Color.Secondary}>
-          {item.title}
+          {locale.translate(item.title)}
         </Text>
       </H>
 
       {item.include && (
         <Text bold>
           {formatQuantity(
+            locale,
             formula.system,
             calculateQuantity(formula, item),
             item.unit,
@@ -408,6 +419,7 @@ function MealFields<
     .length
   const sidesOptions = Object.values(meal.sides || {}).filter(s => s.include)
     .length
+  const { locale } = useContext(I18nContext)
 
   return (
     <V size={Size.Small}>
@@ -432,13 +444,14 @@ function MealFields<
             color={meal.include ? Color.Ink : Color.Secondary}
             size={Size.XSmall}
           >
-            {meal.title}
+            {locale.translate(meal.title)}
           </Header>
         </H>
 
         {meal.include && (
           <Text bold>
             {formatQuantity(
+              locale,
               formula.system,
               quantity,
               meal.unit,
@@ -453,14 +466,15 @@ function MealFields<
           {meal.ingredients && (
             <H size={Size.Small} adjusted>
               <Text color={Color.Secondary} bold>
-                Ingredients
+                {locale.translate('Ingredients')}
               </Text>
 
               <Text color={Color.Secondary}>
                 {Object.values(meal.ingredients)
                   .map(
                     ingredient =>
-                      `${ingredient.title} ${formatQuantity(
+                      `${locale.translate(ingredient.title)} ${formatQuantity(
+                        locale,
                         formula.system,
                         ingredient.quantity * quantity,
                         ingredient.unit,
@@ -475,7 +489,7 @@ function MealFields<
           {meal.sauces && (
             <H size={Size.Small} adjusted>
               <Text color={Color.Secondary} bold>
-                Sauce
+                {locale.translate('Sauce')}
               </Text>
 
               {Object.entries(meal.sauces).map(([sauceKey, sauce]) => (
@@ -497,12 +511,15 @@ function MealFields<
                       }}
                     />
 
-                    <Text color={Color.Secondary}>{sauce.title}</Text>
+                    <Text color={Color.Secondary}>
+                      {locale.translate(sauce.title)}
+                    </Text>
                   </H>
 
                   {sauce.include && (
                     <Text color={Color.Secondary} bold>
                       {formatQuantity(
+                        locale,
                         formula.system,
                         Math.ceil((servings / saucesOptions) * sauce.serving),
                         sauce.unit,
@@ -518,7 +535,7 @@ function MealFields<
           {meal.sides && (
             <V size={Size.Small} adjusted>
               <Text color={Color.Secondary} bold>
-                Sides
+                {locale.translate('Side')}
               </Text>
 
               {Object.entries(meal.sides).map(([sideKey, side]) => {
@@ -553,12 +570,15 @@ function MealFields<
                           }}
                         />
 
-                        <Text color={Color.Secondary}>{side.title}</Text>
+                        <Text color={Color.Secondary}>
+                          {locale.translate(side.title)}
+                        </Text>
                       </H>
 
                       {side.include && (
                         <Text color={Color.Secondary} bold>
                           {formatQuantity(
+                            locale,
                             formula.system,
                             Math.ceil((servings / sidesOptions) * side.serving),
                             side.unit,
@@ -571,7 +591,7 @@ function MealFields<
                     {side.include && side.sauces && (
                       <H size={Size.Small} adjusted>
                         <Text color={Color.Secondary} bold>
-                          Sauces
+                          {locale.translate('Sauce')}
                         </Text>
 
                         {Object.entries(side.sauces).map(
@@ -604,13 +624,14 @@ function MealFields<
                                 />
 
                                 <Text color={Color.Secondary}>
-                                  {sauce.title}
+                                  {locale.translate(sauce.title)}
                                 </Text>
                               </H>
 
                               {sauce.include && (
                                 <Text color={Color.Secondary} bold>
                                   {formatQuantity(
+                                    locale,
                                     formula.system,
                                     Math.ceil(
                                       (servings /
@@ -638,7 +659,7 @@ function MealFields<
 
       {meal.include && (
         <Text color={Color.Secondary} size={Size.Small}>
-          {pluralize('serving', servings, true)}
+          {servings} {locale.pluralize('serving', servings)}
         </Text>
       )}
     </V>
@@ -657,6 +678,7 @@ function DrinkFields({
   itemKey: keyof Formula['drinks']
 }) {
   const item = formula.drinks[itemKey]
+  const { locale } = useContext(I18nContext)
 
   return (
     <H size={Size.Small} adjusted>
@@ -677,13 +699,14 @@ function DrinkFields({
         />
 
         <Text color={item.include ? Color.Ink : Color.Secondary}>
-          {item.title}
+          {locale.translate(item.title)}
         </Text>
       </H>
 
       {item.include && (
         <Text bold>
           {formatQuantity(
+            locale,
             formula.system,
             calculateQuantity(formula, item, info.options.drinks) * 3,
             item.unit,

@@ -1,35 +1,39 @@
 import { RouterContext, useRouter } from '#app/router'
-import { Wrapper } from '#GECK/UI/Layout'
-import { El } from '#GECK/UI/Spacing'
-import { Size } from '#GECK/UI/types'
 import { h } from 'preact'
-import { useContext, useEffect } from 'preact/hooks'
+import { useContext, useEffect, useState } from 'preact/hooks'
 import HomePage from './HomePage'
-import './style'
 import ShoppingListPage from './ShoppingListPage'
+import './style'
+import { I18nContext, locales } from '#app/i18n'
 
 export default function UI({ initialURL }: { initialURL: string }) {
   const router = useRouter(initialURL)
 
+  const localeKey =
+    router.location.params && 'localeKey' in router.location.params
+      ? router.location.params.localeKey
+      : 'en'
+  const locale = locales[localeKey]
+
   return (
-    <RouterContext.Provider value={router}>
-      <Content />
-    </RouterContext.Provider>
+    <I18nContext.Provider value={{ localeKey, locale }}>
+      <RouterContext.Provider value={router}>
+        <Content />
+      </RouterContext.Provider>
+    </I18nContext.Provider>
   )
 }
 
 function Content() {
   const { location } = useContext(RouterContext)
 
-  useEffect(() => {
-    document.title = location.meta.title
-  }, [])
-
   switch (location.name) {
     case 'home':
+    case 'localized-home':
       return <HomePage />
 
     case 'list':
+    case 'localized-list':
       return <ShoppingListPage listId={location.params.listId} />
 
     case '404':
