@@ -41,6 +41,10 @@ const configs: {
       apiKey: 'AIzaSyBv1UnDo_P_lhWB0qHfuxOMN70xtsTnxYU',
       authDomain: 'covidgroceries.com',
       projectId: appConfig.projects.production
+    },
+    gtag: {
+      ga: 'UA-161428898-1',
+      app: 'G-7XMTECTB5H'
     }
   }
 }
