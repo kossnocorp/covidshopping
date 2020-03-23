@@ -13,6 +13,7 @@
   --color-link-hover: var(--color-brand-hover);
   --Button-border-radius: 2px;
   --color-background-content-secondary: #ffe4da;
+  --color-background-note: #fbf7ec;
 
   --font-default: 'Inter', sans-serif;
   --font-header: var(--font-default);

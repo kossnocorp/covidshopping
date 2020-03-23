@@ -19,6 +19,9 @@ import ShoppingListPreview from './ShoppingListPreview'
 import merge from 'lodash/merge'
 import { lsSet, lsGet } from '#GECK/browser'
 import Input from '#GECK/form/Input'
+import Note from '#GECK/UI/Note'
+import ExpandIcon from '#GECK/UI/Icon/angle-down'
+import CollapseIcon from '#GECK/UI/Icon/angle-up'
 
 export default function HomePage() {
   const [formula, setFormulaState] = useState<Formula>(
@@ -40,11 +43,65 @@ export default function HomePage() {
 
   const list = generateShoppingList(formula, info)
 
+  const [aboutCollapsed, setAboutCollapsedState] = useState<boolean>(
+    lsGet('aboutCollapsed') || false
+  )
+  const setAboutCollapsed = (collapsed: boolean) => {
+    lsSet('aboutCollapsed', collapsed)
+    setAboutCollapsedState(collapsed)
+  }
+
   return (
     <H distributed>
       <El padded size={Size.XLarge}>
         <V size={Size.Large}>
-          <Header>The Coronavirus shopping list generator</Header>
+          <V>
+            <Header>The Coronavirus shopping list generator</Header>
+
+            <Note>
+              <H expanded>
+                {aboutCollapsed ? (
+                  <Text content>
+                    <p>
+                      <strong>What is this app for?</strong> Use the generator
+                      to plan shopping for COVID-19 quarantine. Select the
+                      length of stay, number of people, menu, and get the list
+                      of products to buy.
+                    </p>
+
+                    <p>
+                      Use the "Share with family" feature to generate a todo
+                      list and share it with your household or send it to your
+                      phone.
+                    </p>
+
+                    <p>
+                      <a href="mailto:koss@nocorp.me">Email me</a> if you have
+                      any feedback!
+                    </p>
+                  </Text>
+                ) : (
+                  <Text content>
+                    <strong>What is this app for?</strong>
+                  </Text>
+                )}
+
+                {aboutCollapsed ? (
+                  <CollapseIcon
+                    trigger
+                    onClick={() => setAboutCollapsed(false)}
+                    size={Size.Large}
+                  />
+                ) : (
+                  <ExpandIcon
+                    trigger
+                    onClick={() => setAboutCollapsed(true)}
+                    size={Size.Large}
+                  />
+                )}
+              </H>
+            </Note>
+          </V>
 
           <V>
             <H tag="label" size={Size.Small}>
