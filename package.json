@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "@switcher/preact": "^0.5.3",
+    "@typesaurus/preact": "^1.0.0",
     "firebase": "^7.11.0",
     "firebase-admin": "^8.10.0",
     "firebase-functions": "^3.3.0",
@@ -19,7 +20,8 @@
     "pluralize": "^8.0.0",
     "preact": "^10.3.4",
     "preact-render-to-string": "^5.1.4",
-    "reset.css": "^2.0.2"
+    "reset.css": "^2.0.2",
+    "typesaurus": "^5.3.0"
   },
   "devDependencies": {
     "@types/inquirer": "^6.5.0",

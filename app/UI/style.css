@@ -2,8 +2,8 @@
 @import '#GECK/UI/imports';
 
 :root {
-  --color-brand: #b7003b;
-  --color-brand-hover: #ff1f1f;
+  --color-brand: #00a908;
+  --color-brand-hover: #00dc0a;
   --color-canvas: #fff;
   --color-ink: #1b1c1d;
   --color-text-secondary: #645f75;

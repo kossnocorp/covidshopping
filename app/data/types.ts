@@ -66,4 +66,4 @@ export type ShoppingItem = {
   unitTitle?: string
 }
 
-export type ShoppingList = Record<string, ShoppingItem>
+export type ShoppingListProducts = Record<string, ShoppingItem>

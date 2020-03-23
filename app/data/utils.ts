@@ -3,7 +3,7 @@ import {
   Formula,
   Item,
   QuantityUnit,
-  ShoppingList,
+  ShoppingListProducts,
   FormulaInfo,
   MealCategory,
   Ingredient,
@@ -57,7 +57,7 @@ export function formatQuantity(
 }
 
 export function generateShoppingList(formula: Formula, info: FormulaInfo) {
-  const list: ShoppingList = {}
+  const list: ShoppingListProducts = {}
   const categories: MealCategory[] = ['breakfast', 'meals']
 
   Object.entries(formula.items).forEach(([itemKey, item]) => {
@@ -141,7 +141,7 @@ export function generateShoppingList(formula: Formula, info: FormulaInfo) {
 }
 
 function pushShoppingItem(
-  list: ShoppingList,
+  list: ShoppingListProducts,
   itemKey: string,
   item: Item | Ingredient,
   quantity: number

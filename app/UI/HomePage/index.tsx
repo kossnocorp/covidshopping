@@ -15,7 +15,7 @@ import { Color, Size } from '#GECK/UI/types'
 import pluralize from 'pluralize'
 import { h, JSX } from 'preact'
 import { useState } from 'preact/hooks'
-import ShoppingList from './ShoppingList'
+import ShoppingListPreview from './ShoppingListPreview'
 import merge from 'lodash/merge'
 import { lsSet, lsGet } from '#GECK/browser'
 import Input from '#GECK/form/Input'
@@ -273,7 +273,7 @@ export default function HomePage() {
         </V>
       </El>
 
-      <ShoppingList system={formula.system} list={list} />
+      <ShoppingListPreview system={formula.system} list={list} />
     </H>
   )
 }

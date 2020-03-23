@@ -5,6 +5,12 @@ export const appRoutes = [
     title: 'The Coronavirus shopping list generator',
     description:
       "What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list."
+  }),
+
+  route('list')<{ listId: string }>('/l/:listId')({
+    title: 'The Coronavirus shopping list',
+    description:
+      "What to buy and what to cook during the coronavirus? How to survive quarantine? Tell us how big your family is, your diet, and we'll generate you a rational shopping list."
   })
 ]
 

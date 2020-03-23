@@ -6,6 +6,7 @@ import { h } from 'preact'
 import { useContext, useEffect } from 'preact/hooks'
 import HomePage from './HomePage'
 import './style'
+import ShoppingListPage from './ShoppingListPage'
 
 export default function UI({ initialURL }: { initialURL: string }) {
   const router = useRouter(initialURL)
@@ -27,6 +28,9 @@ function Content() {
   switch (location.name) {
     case 'home':
       return <HomePage />
+
+    case 'list':
+      return <ShoppingListPage listId={location.params.listId} />
 
     case '404':
     default:

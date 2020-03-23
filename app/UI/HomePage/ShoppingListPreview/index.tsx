@@ -4,16 +4,22 @@ import { El, H, V } from '#GECK/UI/Spacing'
 import { Size } from '#GECK/UI/types'
 import { Header, Text } from '#GECK/UI/Text'
 import { Button } from '#GECK/UI/Button'
-import { ShoppingList, MeasurementSystem } from '../../../data/types'
+import { ShoppingListProducts, MeasurementSystem } from '../../../data/types'
 import { formatQuantity } from '#app/data/utils'
+import ActionButton from '#GECK/UI/ActionButton'
+import db from '#app/db'
+import { add } from 'typesaurus'
+import { useContext } from 'preact/hooks'
+import { RouterContext } from '#app/router'
 
-export default function ShoppingList({
+export default function ShoppingListPreview({
   system,
   list
 }: {
   system: MeasurementSystem
-  list: ShoppingList
+  list: ShoppingListProducts
 }) {
+  const { navigate } = useContext(RouterContext)
   return (
     <Background>
       <El padded size={Size.XLarge}>
@@ -21,17 +27,30 @@ export default function ShoppingList({
           <H expanded adjusted>
             <Header size={Size.Small}>Shopping list</Header>
 
-            {false && (
-              <H size={Size.Small}>
+            <H size={Size.Small}>
+              {false && (
                 <Button tag="button" size={Size.Small} transparent>
                   Print
                 </Button>
+              )}
 
-                <Button tag="button" size={Size.Small}>
-                  Share with family
-                </Button>
-              </H>
-            )}
+              <ActionButton
+                tag="button"
+                onClick={async () => {
+                  const addedList = await add(db.lists, {
+                    system,
+                    products: list,
+                    bought: {}
+                  })
+                  navigate({
+                    name: 'list',
+                    params: { listId: addedList.ref.id }
+                  })
+                }}
+              >
+                Share with family
+              </ActionButton>
+            </H>
           </H>
 
           <V>
