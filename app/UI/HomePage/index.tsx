@@ -43,8 +43,9 @@ export default function HomePage() {
 
   const list = generateShoppingList(formula, info)
 
+  const aboutCollapsedFromLS = lsGet('aboutCollapsed')
   const [aboutCollapsed, setAboutCollapsedState] = useState<boolean>(
-    lsGet('aboutCollapsed') || false
+    typeof aboutCollapsedFromLS === 'boolean' ? aboutCollapsedFromLS : true
   )
   const setAboutCollapsed = (collapsed: boolean) => {
     lsSet('aboutCollapsed', collapsed)
