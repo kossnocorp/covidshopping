@@ -8,77 +8,79 @@ const pluralizeForms: Record<string, string[]> = {
   roll: ['role', 'role', 'rolí']
 }
 
-const ruLocale: I18nLocale = {
+const csLocale: I18nLocale = {
   localeName: 'Česky',
 
-  title: 'Генератор списка покупок во время пандемии коронавируса',
+  title: 'Nakupni generátor v koronavirové karantene',
   description:
-    'Что покупать и готовить во время пандемии коронавируса? Как пережить карантин? Укажите, насколько большая ваша семья, что вы предпочитаете есть и мы составим для вас рациональный список покупок.',
+    'Co nakupovat a vařit za pandemii? Uveďte, jak je velka vaše domacnost a jaké chcete jídlo;  vytvoříme pro vás nákupní seznam.',
 
   about: {
-    collapsed: `<strong>Для чего это приложение?</strong>`,
+    collapsed: `<strong>Účel webu?</strong>`,
     expanded: `
 <p>
-  <strong>Для чего это приложение?</strong> Используйте генератор для планирования покупок во время пандемии коронавируса. Выберите продолжительность пребывания, количество человек, меню и получите список продуктов для покупки.
+  <strong>Účel webu?</strong> Použijte generator pro plánování nákupu v době karantény. Uveďte dobu, počet lidí, jídlo a dostanete seznam produktu.
 </p>
 
 <p>
-  Используйте функцию «Поделиться списком», чтобы создать список задач и поделиться им со своей семьей или отправить на телефон.
+  Pomoci tlačítka "Sdílet seznam s rodinou" můžete seznam sdílet nebo ho poslat na telefon.
 </p>
 
 <p>
-  <a href="mailto:koss@nocorp.me">Напишите мне</a>, если у вас есть какие-либо отзывы!
+  Mate feedback? <a href="mailto:koss@nocorp.me">Napište mi</a>.
 </p>
 `
   },
 
   measurement: {
-    system: 'Система мер',
-    metric: 'Метрическая',
-    imperial: 'Имперская'
+    system: 'Soustava',
+    metric: 'Metrická',
+    imperial: 'Angloamerická'
   },
-  numberOfDays: 'Продолжительность в днях',
-  numberOfAdults: 'Кол-во взрослых',
-  numberOfKids: 'детей',
+  numberOfDays: 'Počet dní',
+  numberOfAdults: 'Počet dospělých',
+  numberOfKids: 'dětí',
   kidsServing: {
-    title: 'Детская порция рассчитывается как',
-    adult: 'взрослая порция'
+    title: 'Velikost porce pro děti se počítá jako',
+    adult: 'porce pro dospělého'
   },
 
   sections: {
     essentials: {
-      title: 'Предметы первой необходимости'
+      title: 'Předměty denní potřeby'
     },
 
     breakfast: {
-      title: 'Завтрак'
+      title: 'Snídaně'
     },
 
     meals: {
-      title: 'Обеды и ужины',
+      title: 'Obědy a večeře',
       formula: {
-        intro: '2 блюда в день'
+        intro: '2 jídla denně'
       }
     },
 
     drinks: {
-      title: 'Напитки',
-      description: 'Три напитка в день на человека. На завтрак, обед и ужин.'
+      title: 'Nápoje',
+      description: '3 nápoje denně na osobu: snídaně, oběd a večeře'
     },
 
     preview: {
-      title: 'Список покупок',
-      share: 'Поделиться списком'
+      title: 'Nákupní seznam',
+      share: 'Sdílet seznam s rodinou'
     },
 
     list: {
-      title: 'Список покупок',
+      title: 'Nákupní seznam',
       description:
-        'Поделитесь этой страницей со своей семьей. Когда вы отмечаете пункт как купленный, список автоматически обновляется на всех устройствах с открытой страницей.',
+        'Sdílení seznamu s rodinou. Nové označené položky se automaticke objeví na všech zařízeních, kde je seznam otevřen.',
       generated: {
-        intro: 'Этот список сгенерировать с помощью',
-        link: 'генератора списка покупок во время пандемии коронавируса'
-      }
+        intro: 'Seznam je vytvořen pomocí',
+        link: 'generatoru nákupního seznamu pro dobu pandemie koronaviru.'
+      },
+      addToList: 'Přidat do seznamu',
+      remove: 'Smazat'
     }
   },
 

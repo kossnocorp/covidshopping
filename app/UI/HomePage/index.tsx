@@ -73,6 +73,13 @@ export default function HomePage() {
               >
                 {locales.ru.localeName}
               </TextLink>
+
+              <TextLink
+                to={{ name: 'localized-home', params: { localeKey: 'cs' } }}
+                active={localeKey === 'cs'}
+              >
+                {locales.cs.localeName}
+              </TextLink>
             </H>
 
             <Header>{locale.title}</Header>
