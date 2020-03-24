@@ -26,7 +26,7 @@ import ShoppingListPreview from './ShoppingListPreview'
 
 export default function HomePage() {
   const [formula, setFormulaState] = useState<Formula>(
-    merge(defaultFormula, lsGet('formula'))
+    merge({}, defaultFormula, lsGet('formula'))
   )
 
   const setFormula = (newFormula: Formula) => {
