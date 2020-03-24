@@ -162,6 +162,9 @@ const ruLocale: I18nLocale = {
       case 'Toilet paper':
         return 'Туалетная бумага'
 
+      case 'Paper towels':
+        return 'Бумажные полотенца'
+
       case 'Tea':
         return 'Чай'
 

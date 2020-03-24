@@ -93,6 +93,14 @@ export const defaultFormula: Formula = {
       serving: 1 / 7,
       unit: 'number',
       unitTitle: 'roll'
+    },
+
+    paperTowels: {
+      title: 'Paper towels',
+      include: true,
+      serving: 1 / 7,
+      unit: 'number',
+      unitTitle: 'roll'
     }
   },
 
