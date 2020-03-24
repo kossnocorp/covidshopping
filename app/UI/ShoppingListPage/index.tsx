@@ -10,6 +10,9 @@ import { TextLink } from '#GECK/UI/TextLink'
 import { ContentWrapper } from '#GECK/UI/Layout'
 import { useContext } from 'preact/hooks'
 import { I18nContext } from '#app/i18n'
+import Input from '#GECK/form/Input'
+import { Button } from '#GECK/UI/Button'
+import omit from 'lodash/omit'
 
 export default function ShoppingListPage({ listId }: { listId: string }) {
   const list = useOnGet(db.lists, listId)
@@ -51,25 +54,67 @@ export default function ShoppingListPage({ listId }: { listId: string }) {
                         strikethrough={bought}
                         color={bought ? Color.Secondary : Color.Ink}
                       >
-                        <H adjusted size={Size.Small}>
-                          {locale.translate(product.title)}
+                        {'custom' in product ? (
+                          <H adjusted size={Size.Small}>
+                            <div>{product.title}</div>
+                            <Button
+                              size={Size.XSmall}
+                              color={Color.Ink}
+                              transparent
+                              onClick={() => {
+                                update(db.lists, list.ref.id, {
+                                  products: omit(list.data.products, productKey)
+                                })
+                              }}
+                            >
+                              {locale.sections.list.remove}
+                            </Button>
+                          </H>
+                        ) : (
+                          <H adjusted size={Size.Small}>
+                            {locale.translate(product.title)}
 
-                          <Strong>
-                            {formatQuantity(
-                              locale,
-                              list.data.system,
-                              product.quantity,
-                              product.unit,
-                              product.unitTitle
-                            )}
-                          </Strong>
-                        </H>
+                            <Strong>
+                              {formatQuantity(
+                                locale,
+                                list.data.system,
+                                product.quantity,
+                                product.unit,
+                                product.unitTitle
+                              )}
+                            </Strong>
+                          </H>
+                        )}
                       </Text>
                     </H>
                   )
                 }
               )}
             </V>
+
+            <H
+              tag="form"
+              size={Size.Small}
+              onSubmit={(e: Event) => {
+                e.preventDefault()
+                const target = e.target as HTMLFormElement
+                const title = (target.product as HTMLInputElement).value
+                // NOTE: Firestore object keys are sorted by alphabet,
+                // so this hack allows to add custom items to the end.
+                const id = `zzz${Date.now()}`
+                update(db.lists, list.ref.id, {
+                  products: Object.assign({}, list.data.products, {
+                    [id]: { custom: true, title }
+                  })
+                })
+                target.reset()
+              }}
+            >
+              <Input name="product" size={Size.Medium} required />
+              <Button tag="button" type="submit" transparent>
+                {locale.sections.list.addToList}
+              </Button>
+            </H>
 
             <Text color={Color.Secondary}>
               {locale.sections.list.generated.intro}{' '}

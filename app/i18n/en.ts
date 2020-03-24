@@ -79,7 +79,9 @@ const enLocale = {
       generated: {
         intro: 'The shopping list is generated using',
         link: 'The Coronavirus shopping list generator'
-      }
+      },
+      addToList: 'Add to list',
+      remove: 'Remove'
     }
   },
 

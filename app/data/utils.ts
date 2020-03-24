@@ -1,14 +1,14 @@
+import { I18nLocale } from '#app/i18n'
 import {
   Formula,
-  Item,
-  QuantityUnit,
-  ShoppingListProducts,
   FormulaInfo,
-  MealCategory,
   Ingredient,
-  MeasurementSystem
+  Item,
+  MealCategory,
+  MeasurementSystem,
+  QuantityUnit,
+  ShoppingListPreview
 } from './types'
-import { I18nLocale } from '#app/i18n'
 
 export function calculateServings(formula: Formula, item: Item, options = 1) {
   return Math.ceil(
@@ -58,7 +58,7 @@ export function formatQuantity(
 }
 
 export function generateShoppingList(formula: Formula, info: FormulaInfo) {
-  const list: ShoppingListProducts = {}
+  const list: ShoppingListPreview = {}
   const categories: MealCategory[] = ['breakfast', 'meals']
 
   Object.entries(formula.items).forEach(([itemKey, item]) => {
@@ -142,7 +142,7 @@ export function generateShoppingList(formula: Formula, info: FormulaInfo) {
 }
 
 function pushShoppingItem(
-  list: ShoppingListProducts,
+  list: ShoppingListPreview,
   itemKey: string,
   item: Item | Ingredient,
   quantity: number

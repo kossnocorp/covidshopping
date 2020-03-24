@@ -66,4 +66,14 @@ export type ShoppingItem = {
   unitTitle?: string
 }
 
-export type ShoppingListProducts = Record<string, ShoppingItem>
+export type CustomShoppingItem = {
+  custom: true
+  title: string
+}
+
+export type ShoppingListPreview = Record<string, ShoppingItem>
+
+export type ShoppingListProducts = Record<
+  string,
+  ShoppingItem | CustomShoppingItem
+>

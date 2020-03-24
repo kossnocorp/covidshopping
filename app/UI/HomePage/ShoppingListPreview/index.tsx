@@ -4,7 +4,7 @@ import { El, H, V } from '#GECK/UI/Spacing'
 import { Size } from '#GECK/UI/types'
 import { Header, Text } from '#GECK/UI/Text'
 import { Button } from '#GECK/UI/Button'
-import { ShoppingListProducts, MeasurementSystem } from '../../../data/types'
+import { ShoppingListPreview, MeasurementSystem } from '../../../data/types'
 import { formatQuantity } from '#app/data/utils'
 import ActionButton from '#GECK/UI/ActionButton'
 import db from '#app/db'
@@ -18,7 +18,7 @@ export default function ShoppingListPreview({
   list
 }: {
   system: MeasurementSystem
-  list: ShoppingListProducts
+  list: ShoppingListPreview
 }) {
   const { localeKey, locale } = useContext(I18nContext)
 
