@@ -11,7 +11,7 @@ const pluralizeForms: Record<string, string[]> = {
 const csLocale: I18nLocale = {
   localeName: 'Česky',
 
-  title: 'Nakupni generátor v koronavirové karantene',
+  title: 'Generátor nákupního košíku v koronavirové karanténě',
   description:
     'Co nakupovat a vařit za pandemii? Uveďte, jak je velka vaše domacnost a jaké chcete jídlo;  vytvoříme pro vás nákupní seznam.',
 
@@ -19,15 +19,15 @@ const csLocale: I18nLocale = {
     collapsed: `<strong>Účel webu?</strong>`,
     expanded: `
 <p>
-  <strong>Účel webu?</strong> Použijte generator pro plánování nákupu v době karantény. Uveďte dobu, počet lidí, jídlo a dostanete seznam produktu.
+  <strong>Účel webu?</strong> Použijte generátor pro plánování nákupu v době karantény. Uveďte dobu, počet lidí, jídlo a dostanete seznam produktů.
 </p>
 
 <p>
-  Pomoci tlačítka "Sdílet seznam s rodinou" můžete seznam sdílet nebo ho poslat na telefon.
+  Pomocí tlačítka "Sdílet seznam s rodinou" můžete seznam sdílet nebo ho poslat na telefon.
 </p>
 
 <p>
-  Mate feedback? <a href="mailto:koss@nocorp.me">Napište mi</a>.
+  Máte feedback? <a href="mailto:koss@nocorp.me">Napište mi.</a>.
 </p>
 `
   },
@@ -77,7 +77,7 @@ const csLocale: I18nLocale = {
         'Sdílení seznamu s rodinou. Nové označené položky se automaticke objeví na všech zařízeních, kde je seznam otevřen.',
       generated: {
         intro: 'Seznam je vytvořen pomocí',
-        link: 'generatoru nákupního seznamu pro dobu pandemie koronaviru.'
+        link: 'Generátor nákupního košíku v koronavirové karanténě'
       },
       addToList: 'Přidat do seznamu',
       remove: 'Smazat'
@@ -99,8 +99,6 @@ const csLocale: I18nLocale = {
         return 'Arrabiata'
 
       case 'Tomato sauce':
-        return 'Rajčatová'
-
       case 'Tomato':
         return 'Rajčatová'
 

@@ -473,7 +473,7 @@ function MealFields<
           {meal.ingredients && (
             <H size={Size.Small} adjusted>
               <Text color={Color.Secondary} bold>
-                {locale.translate('Ingredients')}
+                {locale.translate('Ingredients')}:
               </Text>
 
               <Text color={Color.Secondary}>
@@ -496,7 +496,7 @@ function MealFields<
           {meal.sauces && (
             <H size={Size.Small} adjusted>
               <Text color={Color.Secondary} bold>
-                {locale.translate('Sauce')}
+                {locale.translate('Sauce')}:
               </Text>
 
               {Object.entries(meal.sauces).map(([sauceKey, sauce]) => (
@@ -598,7 +598,7 @@ function MealFields<
                     {side.include && side.sauces && (
                       <H size={Size.Small} adjusted>
                         <Text color={Color.Secondary} bold>
-                          {locale.translate('Sauce')}
+                          {locale.translate('Sauce')}:
                         </Text>
 
                         {Object.entries(side.sauces).map(
