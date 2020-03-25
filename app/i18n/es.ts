@@ -104,7 +104,7 @@ const esLocale: I18nLocale = {
 
       case 'Tomato sauce':
       case 'Tomato':
-        return 'De tomate'
+        return 'Tomate'
 
       case 'Pasta':
         return 'Pasta'
