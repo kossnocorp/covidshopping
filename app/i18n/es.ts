@@ -1,30 +1,30 @@
-import  {  I18nLocale  }  from  '.'
+import { I18nLocale } from '.'
 
-const  pluralizeForms : Record < string ,  string [ ] >  =  {
-  serving : [ 'porción' ,  'porciones' ,  'porciones' ] ,
-  day : [ 'día' ,  'día' ,  'días' ] ,
-  adult : [ 'adulto' ,  'adultos' ,  'adultos' ] ,
-  kid : [ 'niño' ,  'niño' ,  'niños' ] ,
-  roll : [ 'bolillo' ,  'bolillo' ,  'bolillos' ]
+const pluralizeForms: Record<string, string[]> = {
+  serving: ['porción', 'porciones', 'porciones'],
+  day: ['día', 'día', 'días'],
+  adult: ['adulto', 'adultos', 'adultos'],
+  kid: ['niño', 'niño', 'niños'],
+  roll: ['bolillo', 'bolillo', 'bolillos']
 }
 
-const  esLocale : I18nLocale  =  {
-  localeName: 'Español' ,
+const esLocale: I18nLocale = {
+  localeName: 'Español',
 
   title: 'Generador de lista de compras de Coronavirus',
   description:
-    "¿Qué comprar y cocinar durante el coronavirus? Como sobrevivir la cuarenta? Cuéntanos que tan grande es tu familia, tu dieta, y nosotros generaremos una lista de compras racionalizada.",
+    '¿Qué comprar y cocinar durante el coronavirus? Como sobrevivir la cuarenta? Cuéntanos que tan grande es tu familia, tu dieta, y nosotros generaremos una lista de compras racionalizada.',
 
   about: {
     collapsed: `<strong>¿Para qué sirve esta App?</strong>`,
     expanded: `
 <p>
   <strong>¿Para qué sirve esta App?</strong> Usa el generador
-  para planear las compras para la cuarentena del COVID-19. Selecciona la duración de estadía en casa, cantidad de personas, menú, y 
+  para planear las compras para la cuarentena del COVID-19. Selecciona la duración de estadía en casa, cantidad de personas, menú, y
   obtén la lista de productos a comprar.
 </p>
 <p>
-  Usa el "Compartir con familia" para generar una lista de quehaceres y 
+  Usa el "Compartir con familia" para generar una lista de quehaceres y
   compartirla con tu hogar o enviarla a tu telefono.
 </p>
 <p>
@@ -104,7 +104,7 @@ const  esLocale : I18nLocale  =  {
 
       case 'Tomato sauce':
       case 'Tomato':
-        return 'Salsa de tomate'
+        return 'De tomate'
 
       case 'Pasta':
         return 'Pasta'
@@ -178,12 +178,12 @@ const  esLocale : I18nLocale  =  {
       default:
         return str
     }
-  } ,
+  },
 
-  pluralize : ( str : string ,  num : number )  =>  {
-    const  mod  =  num % 10
-    const  form  =  ( num > = 10  &&  num <= 20 )  ||  mod  >  4 ? 2 : mod  ===  1 ? 0 : 1
-    return  pluralizeForms [ str ] [ form ]
+  pluralize: (str: string, num: number) => {
+    const mod = num % 10
+    const form = (num >= 10 && num <= 20) || mod > 4 ? 2 : mod === 1 ? 0 : 1
+    return pluralizeForms[str][form]
   }
 }
 export default esLocale

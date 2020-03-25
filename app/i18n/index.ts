@@ -7,7 +7,7 @@ import { createContext } from 'preact'
 export const locales = {
   en: enLocale,
   ru: ruLocale,
-  cs: csLocale
+  cs: csLocale,
   es: esLocale
 }
 

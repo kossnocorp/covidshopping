@@ -80,6 +80,13 @@ export default function HomePage() {
               >
                 {locales.cs.localeName}
               </TextLink>
+
+              <TextLink
+                to={{ name: 'localized-home', params: { localeKey: 'es' } }}
+                active={localeKey === 'es'}
+              >
+                {locales.es.localeName}
+              </TextLink>
             </H>
 
             <Header>{locale.title}</Header>
