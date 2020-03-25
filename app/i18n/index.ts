@@ -1,12 +1,14 @@
 import enLocale from './en'
 import ruLocale from './ru'
 import csLocale from './cs'
+import esLocale from './es'
 import { createContext } from 'preact'
 
 export const locales = {
   en: enLocale,
   ru: ruLocale,
   cs: csLocale
+  es: esLocale
 }
 
 export type I18nLocale = typeof enLocale
